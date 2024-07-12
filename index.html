@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + Lit + TS</title>
+    <link rel="stylesheet" href="./src/index.css" />
+    <script type="module" src="/src/components/index.ts"></script>
+    <script type="module">
+      import WeClient from "/src/client.ts";
+      window.WeClient = WeClient;
+    </script>
+    <script>
+      function onSubmit() {
+        if (WeClient) {
+          const client = new WeClient();
+          client.initClient();
+          // client.setLanguage("zh");
+          // client.updateFooterConifg({
+          //   backgroundColor: "green",
+          //   textColor: "black",
+          // });
+        }
+      }
+    </script>
+    <style>
+      we-game-preview {
+        margin: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <div style="margin: auto; display: flex; flex-direction: column">
+      <we-game-preview gamecode="STUDIO-BAA-1"></we-game-preview>
+      <we-game-preview gamecode="STUDIO-BAA-4"></we-game-preview>
+      <we-game-preview gamecode="STUDIO-BAA-5"></we-game-preview>
+      <we-game-preview gamecode="STUDIO-BAA-15"></we-game-preview>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "name": "wecasino-widget",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 3100",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@lit/context": "^1.1.0",
+    "@wegdevio/roadmap-ts-lib": "^0.3.15",
+    "decimal.js": "^10.4.3",
+    "immer": "^10.0.4",
+    "lit": "^3.1.2",
+    "numeral": "^2.0.6",
+    "zustand": "^4.5.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "@types/numeral": "^2.0.5",
+    "ts-lit-plugin": "^2.0.2",
+    "typescript": "^5.2.2",
+    "vite": "^5.2.0"
+  }
+}
