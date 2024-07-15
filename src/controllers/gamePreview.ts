@@ -3,6 +3,7 @@ import { ReactiveController, ReactiveControllerHost } from "lit";
 import { calcBAStats } from "@wegdevio/roadmap-ts-lib";
 
 import configStore from "../stores/configStore";
+import gameStore from "../stores/gameStore";
 import { Game } from "../types";
 
 const RoundState = {
@@ -24,12 +25,14 @@ export class GamePreviewController implements ReactiveController {
 
   private _gameCode: string;
   private _unsubConfigStore: () => void;
+  private _unsubGameStore: () => void;
 
   public set gameCode(gameCode: string) {
     this._gameCode = gameCode;
   }
 
   public get gameCode() {
+    gameStore.getState().updateGameCode(this._gameCode);
     return this._gameCode;
   }
 
@@ -45,18 +48,28 @@ export class GamePreviewController implements ReactiveController {
     this.host.requestUpdate();
   }
 
+  private subScribeGametore() {
+    this.host.requestUpdate();
+  }
+
   public connectStore() {
     this._unsubConfigStore = configStore.subscribe(
       this.subScribeConfigstore.bind(this)
+    );
+    this._unsubGameStore = gameStore.subscribe(
+      this.subScribeGametore.bind(this)
     );
   }
 
   public disconnectStore() {
     this._unsubConfigStore?.();
+    this._unsubGameStore?.();
   }
 
   public get game(): Game {
-    return {};
+    const games = gameStore.getState().games;
+    const game = games[this.gameCode] || {};
+    return game;
   }
   public getGameInfos() {
     const game = this.game;

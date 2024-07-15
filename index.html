@@ -9,33 +9,36 @@
     <script type="module" src="/src/components/index.ts"></script>
     <script type="module">
       import WeClient from "/src/client.ts";
-      window.WeClient = WeClient;
-    </script>
-    <script>
-      function onSubmit() {
-        if (WeClient) {
-          const client = new WeClient();
-          client.initClient();
-          // client.setLanguage("zh");
-          // client.updateFooterConifg({
-          //   backgroundColor: "green",
-          //   textColor: "black",
-          // });
-        }
+      console.info("WeClient", { WeClient });
+      if (WeClient) {
+        window.WeClient = WeClient;
+        const client = new WeClient();
+        client.setBaseUrl("https://example-api.com");
+        client.initClient();
       }
     </script>
     <style>
-      we-game-preview {
-        margin: 6px;
+      .wrapper {
+        margin: 6px 0;
+        overflow: hidden;
+        border-radius: 8px;
       }
     </style>
   </head>
   <body>
     <div style="margin: auto; display: flex; flex-direction: column">
-      <we-game-preview gamecode="STUDIO-BAA-1"></we-game-preview>
-      <we-game-preview gamecode="STUDIO-BAA-4"></we-game-preview>
-      <we-game-preview gamecode="STUDIO-BAA-5"></we-game-preview>
-      <we-game-preview gamecode="STUDIO-BAA-15"></we-game-preview>
+      <div class="wrapper">
+        <we-game-preview gamecode="STUDIO-BAA-1"></we-game-preview>
+      </div>
+      <div class="wrapper">
+        <we-game-preview gamecode="STUDIO-BAA-4"></we-game-preview>
+      </div>
+      <div class="wrapper">
+        <we-game-preview gamecode="STUDIO-BAA-5"></we-game-preview>
+      </div>
+      <div class="wrapper">
+        <we-game-preview gamecode="STUDIO-BAA-15"></we-game-preview>
+      </div>
     </div>
   </body>
 </html>
