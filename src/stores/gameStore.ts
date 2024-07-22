@@ -2,13 +2,15 @@ import { produce } from "immer";
 // import { shallow } from "zustand/shallow";
 import { createStore } from "zustand/vanilla";
 
-import { Game, Games } from "../types";
+import { Game, GameInfoResult, GameRoundResult, Games } from "../types";
 
 export interface IGameStore {
   games: Games;
   gameCodes: string[];
   updateGameCode: (gameCode: string) => void;
   updateGames: (games: Game[]) => void;
+  updateGameInfos: (gameInfos: GameInfoResult[]) => void;
+  updateGameRounds: (gameRounds: GameRoundResult[]) => void;
 }
 
 const getStoreDefaultState = () => ({
@@ -34,6 +36,34 @@ const gameStore = createStore<IGameStore>((set) => ({
             g.gameInfo?.gameCode ? { ...p, [g.gameInfo?.gameCode]: g } : p,
           {} as Games
         );
+        draft.games = { ...draft.games, ...updatedGames };
+      })
+    );
+  },
+  updateGameInfos: (gameInfos: GameInfoResult[]) => {
+    set((s) =>
+      produce(s, (draft) => {
+        const updatedGames: Games = gameInfos.reduce((p, g) => {
+          const gameCode = g?.gameCode;
+          if (!gameCode) return p;
+          const game = p[gameCode];
+          const nextGame = { ...game, gameInfo: g };
+          return { ...p, [gameCode]: nextGame };
+        }, s.games);
+        draft.games = { ...draft.games, ...updatedGames };
+      })
+    );
+  },
+  updateGameRounds: (gameRounds: GameRoundResult[]) => {
+    set((s) =>
+      produce(s, (draft) => {
+        const updatedGames: Games = gameRounds.reduce((p, g) => {
+          const gameCode = g?.gameCode;
+          if (!gameCode) return p;
+          const game = p[gameCode];
+          const nextGame = { ...game, gameRound: g };
+          return { ...p, [gameCode]: nextGame };
+        }, s.games);
         draft.games = { ...draft.games, ...updatedGames };
       })
     );

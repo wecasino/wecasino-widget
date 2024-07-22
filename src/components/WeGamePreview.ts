@@ -39,12 +39,12 @@ export class WeGamePreview extends LitElement {
   public connectedCallback(): void {
     super.connectedCallback();
     this.ctrl.gameCode = this.gameCode;
-    // this.ctrl.connectStore();
+    this.ctrl.connectStore();
   }
 
   public disconnectedCallback() {
     super.disconnectedCallback();
-    // this.ctrl.disconnectStore();
+    this.ctrl.disconnectStore();
   }
 
   protected updated(

@@ -20,6 +20,12 @@ const getIsChangingShoe = (roundState: string) => {
   return [RoundState.NEW_SHOE, RoundState.SHUFFLE].includes(roundState);
 };
 
+const handleImageUrl = (url: string) => {
+  if (!url) return url;
+  if (url.startsWith("http") || url.startsWith("https")) return url;
+  return `https://${url}`;
+};
+
 export class GamePreviewController implements ReactiveController {
   host: ReactiveControllerHost;
 
@@ -29,10 +35,10 @@ export class GamePreviewController implements ReactiveController {
 
   public set gameCode(gameCode: string) {
     this._gameCode = gameCode;
+    gameStore.getState().updateGameCode(this._gameCode);
   }
 
   public get gameCode() {
-    gameStore.getState().updateGameCode(this._gameCode);
     return this._gameCode;
   }
 
@@ -71,6 +77,7 @@ export class GamePreviewController implements ReactiveController {
     const game = games[this.gameCode] || {};
     return game;
   }
+
   public getGameInfos() {
     const game = this.game;
     const language = this.getConfig().language;
@@ -78,7 +85,7 @@ export class GamePreviewController implements ReactiveController {
       game?.gameInfo?.gameDescr?.[language || ""] ||
       game?.gameInfo?.gameDescr?.zh ||
       "-";
-    const stats = calcBAStats(game?.gameRound?.accumCards.slice(-999) || []);
+    const stats = calcBAStats(game?.gameRound?.accumCards?.slice(-999) || []);
 
     const roundState = game?.gameRound?.roundState || "";
 
@@ -91,12 +98,10 @@ export class GamePreviewController implements ReactiveController {
     const roundCard = this.game?.gameRound?.roundCard || "0,0,0,0,0,0";
     const accumCards = this.game?.gameRound?.accumCards || [];
     const gameState = game?.gameRound?.gameState;
-    const gameStream = game?.gameStream || {};
 
-    const coverImageUrl =
-      gameStream?.capDomainMain && gameStream?.capPathMain
-        ? `https://${gameStream?.capDomainMain}${gameStream?.capPathMain}`
-        : "";
+    const coverImageUrl = handleImageUrl(
+      game?.gameInfo?.gameMeta?.dealerImage || ""
+    );
 
     let gameStateFlag = "";
     if (

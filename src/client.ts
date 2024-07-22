@@ -1,15 +1,15 @@
 import configStore, { FooterConfig } from "./stores/configStore";
 import gameStore from "./stores/gameStore";
+import { GameInfoResult, GameRoundResult } from "./types";
 
 class WeClient {
-  private _fetcher: number;
-
-  constructor() {}
+  constructor() {
+    this.initClient();
+  }
 
   public initClient() {
-    this.fetchData = this.fetchData.bind(this);
-    this.startPollData = this.startPollData.bind(this);
-    this.startPollData();
+    this.connectWS = this.connectWS.bind(this);
+    this.updateGameData = this.updateGameData.bind(this);
   }
 
   public listenGameUpdates(gameCodes: string) {
@@ -28,22 +28,28 @@ class WeClient {
     configStore.getState().setBaseUrl(url);
   }
 
-  public fetchData() {
-    const gameCodes = gameStore.getState().gameCodes;
-    const url = configStore.getState().baseUrl;
-    console.info(`fetch data [${url}]`, gameCodes);
-    // TODO: implement fetch data logi
-    // 1. do fetch
-    // 2. update game with new Data
-    gameStore.getState().updateGames([]);
+  public updateGameData(dataString: string) {
+    const data = JSON.parse(dataString);
+    if (data.gameInfos) {
+      const gameInfos = data.gameInfos as GameInfoResult[];
+      gameStore.getState().updateGameInfos(gameInfos);
+    }
+    if (data.gameRounds) {
+      const gameRounds = data.gameRounds as GameRoundResult[];
+      gameStore.getState().updateGameRounds(gameRounds);
+    }
   }
 
-  public startPollData() {
-    clearTimeout(this._fetcher);
-    setTimeout(() => {
-      this.fetchData();
-      this.startPollData();
-    }, 5000);
+  public connectWS({ token }: { token: string }) {
+    const baseUrl = configStore.getState().baseUrl;
+    const url = `${baseUrl}?token=${token}`;
+    const socket = new WebSocket(url);
+    socket.onopen = () => console.info("on socket open");
+    socket.onmessage = (e) => {
+      if (e.data) this.updateGameData(e.data);
+    };
+    socket.onerror = (e) => console.info("on socket error", e);
+    socket.onclose = (e) => console.info("on socket close", { e });
   }
 }
 
