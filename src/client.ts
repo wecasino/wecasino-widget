@@ -40,16 +40,28 @@ class WeClient {
     }
   }
 
-  public connectWS({ token }: { token: string }) {
+  public connectWS({
+    token,
+    onClose,
+    onError,
+  }: {
+    token: string;
+    onClose?: (e: Event) => void;
+    onError?: (e: Event) => void;
+  }) {
     const baseUrl = configStore.getState().baseUrl;
     const url = `${baseUrl}?token=${token}`;
     const socket = new WebSocket(url);
-    socket.onopen = () => console.info("on socket open");
+    // socket.onopen = () => console.info("on socket open");
     socket.onmessage = (e) => {
       if (e.data) this.updateGameData(e.data);
     };
-    socket.onerror = (e) => console.info("on socket error", e);
-    socket.onclose = (e) => console.info("on socket close", { e });
+    socket.onerror = (e) => {
+      onError?.(e);
+    };
+    socket.onclose = (e) => {
+      onClose?.(e);
+    };
   }
 }
 
