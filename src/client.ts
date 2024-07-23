@@ -3,6 +3,9 @@ import gameStore from "./stores/gameStore";
 import { GameInfoResult, GameRoundResult } from "./types";
 
 class WeClient {
+  private _onClose: (e: CloseEvent) => void;
+  private _onError: (e: Event) => void;
+
   constructor() {
     this.initClient();
   }
@@ -10,6 +13,16 @@ class WeClient {
   public initClient() {
     this.connectWS = this.connectWS.bind(this);
     this.updateGameData = this.updateGameData.bind(this);
+    this.handleWSClose = this.handleWSClose.bind(this);
+    this.handleWSError = this.handleWSError.bind(this);
+  }
+
+  public set onClose(cb: (e: CloseEvent) => void) {
+    this._onClose = cb;
+  }
+
+  public set onError(cb: (e: Event) => void) {
+    this._onError = cb;
   }
 
   public listenGameUpdates(gameCodes: string) {
@@ -40,15 +53,15 @@ class WeClient {
     }
   }
 
-  public connectWS({
-    token,
-    onClose,
-    onError,
-  }: {
-    token: string;
-    onClose?: (e: Event) => void;
-    onError?: (e: Event) => void;
-  }) {
+  private handleWSError(e: Event) {
+    this._onError?.(e);
+  }
+
+  private handleWSClose(e: CloseEvent) {
+    this._onClose?.(e);
+  }
+
+  public connectWS({ token }: { token: string }) {
     const baseUrl = configStore.getState().baseUrl;
     const url = `${baseUrl}?token=${token}`;
     const socket = new WebSocket(url);
@@ -57,10 +70,10 @@ class WeClient {
       if (e.data) this.updateGameData(e.data);
     };
     socket.onerror = (e) => {
-      onError?.(e);
+      this.handleWSError(e);
     };
     socket.onclose = (e) => {
-      onClose?.(e);
+      this.handleWSClose(e);
     };
   }
 }

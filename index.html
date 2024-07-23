@@ -14,10 +14,10 @@
         window.WeClient = WeClient;
         const client = new WeClient();
         client.setBaseUrl("https://uat-weg-gdsapi.wehosts247.com/widgetws");
+        client.onError = (e) => console.info("socket error", e);
+        client.onClose = (e) => console.info("socket closed", e);
         client.connectWS({
           token: "ugs.weguest_ag3nP0D.01j3c9e7vex5rnxcfn639rf2x4",
-          onError: (e) => console.info("socket error", e),
-          onClose: (e) => console.info("socket closed", e),
         });
       }
     </script>
