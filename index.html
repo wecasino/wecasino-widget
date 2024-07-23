@@ -9,39 +9,115 @@
     <script type="module" src="/src/components/index.ts"></script>
     <script type="module">
       import WeClient from "/src/client.ts";
-      console.info("WeClient", { WeClient });
-      if (WeClient) {
-        window.WeClient = WeClient;
-        const client = new WeClient();
-        client.setBaseUrl("https://uat-weg-gdsapi.wehosts247.com/widgetws");
-        client.onError = (e) => console.info("socket error", e);
-        client.onClose = (e) => console.info("socket closed", e);
-        client.connectWS({
-          token: "ugs.weguest_ag3nP0D.01j3c9e7vex5rnxcfn639rf2x4",
-        });
+      window.WeClient = WeClient;
+      console.info("import WeClient", { WeClient });
+    </script>
+    <script>
+      function onSubmit() {
+        const token = document.getElementById("token");
+        if (WeClient) {
+          const client = new WeClient();
+          const loginToken =
+            token?.value || "ugs.weguest_ag3nP0D.01j3c9e7vex5rnxcfn639rf2x4";
+          client.setBaseUrl("https://uat-weg-gdsapi.wehosts247.com/widgetws");
+          client.onError = (e) => console.info("socket error", e);
+          client.onClose = (e) => console.info("socket closed", e);
+          client.connectWS({
+            token: loginToken,
+          });
+        }
       }
     </script>
     <style>
+      .content {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: black;
+      }
       .wrapper {
-        margin: 6px 0;
+        margin: 6px;
         overflow: hidden;
+      }
+
+      .round-wrapper {
         border-radius: 8px;
+      }
+      .form-input {
+        display: flex;
+        margin: 6px;
+      }
+
+      .item {
+        margin: 6px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #eeeeee;
+        border-radius: 8px;
+        padding: 4px;
+        box-shadow: 2px 2px 4px 2px #888888;
+      }
+
+      .label {
+        max-width: 300px;
+        font-weight: 500;
       }
     </style>
   </head>
   <body>
-    <div style="margin: auto; display: flex; flex-direction: column">
-      <div class="wrapper">
-        <we-game-preview gamecode="STUDIO-BAA-1"></we-game-preview>
+    <div class="content">
+      <h1>WECasino Widget</h1>
+      <div class="form-input">
+        TOKEN:
+        <input id="token" />
+        <button onclick="onSubmit()">Connect</button>
       </div>
-      <div class="wrapper">
-        <we-game-preview gamecode="STUDIO-BAA-4"></we-game-preview>
-      </div>
-      <div class="wrapper">
-        <we-game-preview gamecode="STUDIO-BAA-5"></we-game-preview>
-      </div>
-      <div class="wrapper">
-        <we-game-preview gamecode="STUDIO-BAA-15"></we-game-preview>
+      <div style="margin: auto; display: flex; flex-wrap: wrap">
+        <div class="item">
+          <div class="label">Game Code: STUDIO-BBA-1</div>
+          <div class="wrapper">
+            <we-game-preview gamecode="STUDIO-BAA-1"></we-game-preview>
+          </div>
+        </div>
+        <div class="item">
+          <div class="label">Game Code: STUDIO-BBA-4<br />width: 240px</div>
+          <div class="wrapper">
+            <we-game-preview
+              gamecode="STUDIO-BAA-4"
+              width="240px"
+            ></we-game-preview>
+          </div>
+        </div>
+        <div class="item">
+          <div class="label">
+            Game Code: STUDIO-BBA-<br />footer-color:blue<br />footer-background:red
+            font<br />footer-padding: 0.8rem<br />title: Override Title <br />
+            with round-wrapper class
+          </div>
+          <div class="wrapper round-wrapper">
+            <we-game-preview
+              gamecode="STUDIO-BAA-5"
+              footer-color="blue"
+              footer-background="red"
+              footer-padding="0.8rem"
+              title="Override Title"
+            ></we-game-preview>
+          </div>
+        </div>
+        <div class="item">
+          <div class="label">
+            Game Code: STUDIO-BBA-15<br />
+            with-footer: false
+          </div>
+          <div class="wrapper">
+            <we-game-preview
+              gamecode="STUDIO-BAA-15"
+              with-footer="false"
+            ></we-game-preview>
+          </div>
+        </div>
       </div>
     </div>
   </body>

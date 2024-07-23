@@ -25,11 +25,8 @@ export class WeGamePreview extends LitElement {
   @property({ attribute: "width" })
   width = "";
 
-  @property({ attribute: "with-footer", type: Boolean })
-  withFooter = true;
-
-  @property({ attribute: "with-realtime-data", type: Boolean })
-  withRealtimeData = false;
+  @property({ attribute: "with-footer" })
+  withFooter = "true";
 
   @property()
   title = "";
@@ -79,7 +76,8 @@ export class WeGamePreview extends LitElement {
   }
 
   renderFooter() {
-    if (!this.withFooter) return html``;
+    const hasFooter = this.withFooter === "true";
+    if (!hasFooter) return html``;
     const { title } = this.ctrl.getGameInfos();
     const config = this.ctrl.getConfig();
     const footerBackgroundColor =
