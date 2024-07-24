@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>We</title>
+    <link rel="stylesheet" href="./index.css" />
+    <script type="module" src="../dist/wecasino-widget-0.0.0.ts"></script>
+    <script type="module">  
+
+      console.info("WeClient", window.WeClient);
+
+      let client;
+      function onSubmit() {
+        const token = document.getElementById("token");
+        const languageElem = document.getElementById("language");
+        const envElem = document.getElementById("env");
+        const env = envElem?.value || "snd";
+        const operCode = env === "snd" ? "weguest_ag3nP0D" : "weguest_agqJgF5";
+
+        if (WeClient) {
+          client = new WeClient({
+            // ask we to provide
+            operCode: operCode,
+            // ask we to provide
+            appKey: "v1_81qFsUWYEfMgJaYtwjVDTbyFyXE5J4NpaTZDdDaq1HsL",
+            sandbox: env === "snd",
+            // for custom data url
+            // dataUrl: "ws://localhost:16000/widgetws",
+            onOpen: () => console.info("socket open"),
+            onError: (e) => console.info("socket error", e),
+            onClose: (e) => console.info("socket closed", e),
+          });
+
+          const lang = languageElem?.value || "en";
+          client.setLanguage(lang);
+
+          client.connect();
+        }
+      }
+
+      function onLangChange(e) {
+        if (client) {
+          const lang = e.value;
+          client.setLanguage(lang);
+        }
+      }
+    </script>
+    <style>
+      .content {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: black;
+      }
+      .wrapper {
+        margin: 6px;
+        overflow: hidden;
+      }
+
+      .round-wrapper {
+        border-radius: 8px;
+      }
+      .form-input {
+        display: flex;
+        margin: 6px;
+      }
+
+      .item {
+        margin: 6px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #eeeeee;
+        border-radius: 8px;
+        padding: 4px;
+        box-shadow: 2px 2px 4px 2px #888888;
+      }
+
+      .label {
+        max-width: 300px;
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <h1>We Game Widget Demo</h1>
+      <div class="form-input">
+        ENV:
+        <select id="env">
+          <option value="snd">sandbox</option>
+          <option value="prd">production</option>
+        </select>
+      </div>
+      <div class="form-input">
+        Language:
+        <select id="language" onchange="onLangChange(this)">
+          <option value="en">en</option>
+          <option value="cn">cn</option>
+          <option value="zh">zh</option>
+          <option value="es">es</option>
+          <option value="id">id</option>
+          <option value="in">in</option>
+          <option value="ja">ja</option>
+          <option value="ko">ko</option>
+          <option value="my">my</option>
+          <option value="pt">pt</option>
+          <option value="th">th</option>
+          <option value="tl">tl</option>
+          <option value="tr">tr</option>
+          <option value="vi">vi</option>
+        </select>
+      </div>
+      <div class="form-input">
+        TOKEN:
+        <input id="token" />
+        <button onclick="onSubmit()">Connect</button>
+      </div>
+      <div style="margin: auto; display: flex; flex-wrap: wrap">
+        <div class="item">
+          <div class="label">Game Code: STUDIO-BBA-1</div>
+          <div class="wrapper">
+            <we-game-preview gamecode="STUDIO-BAA-1"></we-game-preview>
+          </div>
+        </div>
+        <div class="item">
+          <div class="label">Game Code: STUDIO-BBA-4<br />width: 240px</div>
+          <div class="wrapper">
+            <we-game-preview
+              gamecode="STUDIO-BAA-4"
+              width="240px"
+            ></we-game-preview>
+          </div>
+        </div>
+        <div class="item">
+          <div class="label">
+            Game Code: STUDIO-BBA-5<br />footer-color:blue<br />footer-background:red
+            font<br />footer-padding: 0.8rem<br />title: Override Title <br />
+            with round-wrapper class
+          </div>
+          <div class="wrapper round-wrapper">
+            <we-game-preview
+              gamecode="STUDIO-BAA-5"
+              footer-color="blue"
+              footer-background="red"
+              footer-padding="0.8rem"
+              title="Override Title"
+            ></we-game-preview>
+          </div>
+        </div>
+        <div class="item">
+          <div class="label">
+            Game Code: STUDIO-BBA-15<br />
+            with-footer: false
+          </div>
+          <div class="wrapper">
+            <we-game-preview
+              gamecode="STUDIO-BAA-15"
+              with-footer="false"
+            ></we-game-preview>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
