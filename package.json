@@ -10,8 +10,9 @@
   },
   "dependencies": {
     "@lit/context": "^1.1.0",
-    "@wegdevio/roadmap-ts-lib": "^0.3.15",
+    "@wegdevio/roadmap-ts-lib": "^0.4.3",
     "immer": "^10.0.4",
+    "js-sha3": "^0.9.3",
     "lit": "^3.1.2",
     "zustand": "^4.5.2"
   },

@@ -5,16 +5,13 @@ import { createStore } from "zustand/vanilla";
 export type FooterConfig = { textColor?: string; backgroundColor?: string };
 
 export interface IConfigStore {
-  baseUrl?: string;
   language?: string;
   footer: FooterConfig;
   setLanguage: (lang: string) => void;
-  setBaseUrl: (url: string) => void;
   updateFooterConfig: (config: FooterConfig) => void;
 }
 
 const getStoreDefaultState = () => ({
-  baseUrl: "",
   language: "en",
   footer: {},
 });
@@ -32,13 +29,6 @@ const configStore = createStore<IConfigStore>((set) => ({
     set((s) =>
       produce(s, (draft) => {
         draft.language = lang;
-      })
-    );
-  },
-  setBaseUrl: (url: string) => {
-    set((s) =>
-      produce(s, (draft) => {
-        draft.baseUrl = url;
       })
     );
   },
