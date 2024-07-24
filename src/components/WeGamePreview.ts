@@ -131,6 +131,7 @@ export class WeGamePreview extends LitElement {
         <div class="roadmap-content">
           <div class="roadmap">
             <img
+              class="image" 
               alt="roadmap"
               src=${`data:image/svg+xml;utf8,${encodeURIComponent(svgContent)}`}
               loading="lazy"
@@ -142,7 +143,7 @@ export class WeGamePreview extends LitElement {
         "maintence-container": true,
         hidden: !isMaintenance,
       })}>
-        <div class="icon"><img src=${maintenanceIcon}></img></div>
+        <div class="icon"><img class="image" src=${maintenanceIcon}></img></div>
         <div class="text">${t("common.state.maintenance")}</div>
       </div>
       ${this.renderFooter()}
@@ -234,11 +235,6 @@ export class WeGamePreview extends LitElement {
     .roadmap {
       width: 100%;
       height: 100%;
-
-      img {
-        width: 100%;
-        height: 100%;
-      }
     }
 
     .bet-pool-bar {
@@ -297,11 +293,11 @@ export class WeGamePreview extends LitElement {
     .icon {
       width: 1.25rem;
       height: 1.25rem;
+    }
 
-      img {
-        width: 100%;
-        height: 100%;
-      }
+    .image {
+      width: 100%;
+      height: 100%;
     }
 
     .text {
