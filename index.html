@@ -13,18 +13,35 @@
       console.info("import WeClient", { WeClient });
     </script>
     <script>
+      let client;
       function onSubmit() {
         const token = document.getElementById("token");
+        const languageElem = document.getElementById("language");
+        const envElem = document.getElementById("env");
+
         if (WeClient) {
-          const client = new WeClient();
-          const loginToken =
-            token?.value || "ugs.weguest_ag3nP0D.01j3c9e7vex5rnxcfn639rf2x4";
-          client.setBaseUrl("https://uat-weg-gdsapi.wehosts247.com/widgetws");
+          client = new WeClient();
+          const loginToken = token?.value;
+          const lang = languageElem?.value || "en";
+          const env = envElem?.value || "prod";
+          const url =
+            env === "prod"
+              ? "wss://nc-gdsapi.worldonlinegame.com/widgetws"
+              : "https://uat-weg-gdsapi.wehosts247.com/widgetws";
+          client.setBaseUrl(url);
+          client.setLanguage(lang);
           client.onError = (e) => console.info("socket error", e);
           client.onClose = (e) => console.info("socket closed", e);
           client.connectWS({
             token: loginToken,
           });
+        }
+      }
+
+      function onLangChange(e) {
+        if (client) {
+          const lang = e.value;
+          client.setLanguage(lang);
         }
       }
     </script>
@@ -69,6 +86,32 @@
   <body>
     <div class="content">
       <h1>WECasino Widget</h1>
+      <div class="form-input">
+        ENV:
+        <select id="env">
+          <option value="prod">PROD</option>
+          <option value="uat">UAT</option>
+        </select>
+      </div>
+      <div class="form-input">
+        Language:
+        <select id="language" onchange="onLangChange(this)">
+          <option value="en">en</option>
+          <option value="cn">cn</option>
+          <option value="zh">zh</option>
+          <option value="es">es</option>
+          <option value="id">id</option>
+          <option value="in">in</option>
+          <option value="ja">ja</option>
+          <option value="ko">ko</option>
+          <option value="my">my</option>
+          <option value="pt">pt</option>
+          <option value="th">th</option>
+          <option value="tl">tl</option>
+          <option value="tr">tr</option>
+          <option value="vi">vi</option>
+        </select>
+      </div>
       <div class="form-input">
         TOKEN:
         <input id="token" />
