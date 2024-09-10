@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>We</title>
     <link rel="stylesheet" href="./index.css" />
-    <script src="./wecasino-widget-0.0.0.umd.cjs"></script>
+    <script src="./index.global.js?v=2211333333112"></script>
     <script>  
 
-      console.info("WeClient", window.WeClient);
+      console.info("wewidget.WeClient", wewidget.WeClient);
 
       let client;
       function onSubmit() {
@@ -18,8 +18,8 @@
         const env = envElem?.value || "snd";
         const operCode = env === "snd" ? "weguest_ag3nP0D" : "weguest_agqJgF5";
 
-        if (WeClient) {
-          client = new WeClient({
+        if (wewidget.WeClient) {
+          client = new wewidget.WeClient({
             // ask we to provide
             operCode: operCode,
             // ask we to provide

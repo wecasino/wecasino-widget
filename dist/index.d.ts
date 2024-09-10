@@ -60,11 +60,6 @@ declare class WeGamePreview extends LitElement {
     static styles: lit.CSSResult;
 }
 
-declare const _default$1: {
-    WeSpacer: typeof WeSpacer;
-    WeGamePreview: typeof WeGamePreview;
-};
-
 declare global {
     interface HTMLElementTagNameMap {
         "we-spacer": WeSpacer;
@@ -72,13 +67,4 @@ declare global {
     }
 }
 
-declare namespace WeComponent {
-  export { _default$1 as default };
-}
-
-declare const _default: {
-    WeComponent: typeof WeComponent;
-    WeClient: typeof WeClient;
-};
-
-export { _default as default };
+export { WeClient, WeGamePreview, WeSpacer };

@@ -1,9 +1,7 @@
 import WeClient from "./client";
-import * as WeComponent from "./components";
+import { WeGamePreview, WeSpacer } from "./components";
 
-// @ts-ignore
-globalThis.WeClient = WeClient;
-// @ts-ignore
-globalThis.WeComponent = WeComponent;
+// // @ts-ignore
+// globalThis.WeClient = WeClient;
 
-export default { WeComponent, WeClient };
+export { WeClient, WeGamePreview, WeSpacer };
