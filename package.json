@@ -1,17 +1,41 @@
 {
   "name": "wecasino-widget",
-  "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "tsup": {
+    "dts": true,
+    "minify": true,
+    "target": "ES2020",
+    "format": ["esm", "cjs", "iife"],
+    "entry": ["src/index.ts"]
+  },
   "scripts": {
     "dev": "vite --port 3100",
-    "build": "tsc && vite build",
+    "build": "tsup --out-dir dist --global-name WeClient",
     "preview": "vite preview",
     "example": "http-server -p 8101 -o ./example"
   },
   "dependencies": {
     "@lit/context": "^1.1.0",
-    "@wegdevio/roadmap-ts-lib": "^0.4.3",
+    "@wegdevio/roadmap-ts-lib": "^0.6.0",
     "immer": "^10.0.4",
     "js-sha3": "^0.9.3",
     "lit": "^3.1.2",
@@ -25,6 +49,7 @@
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
     "vite-plugin-dts": "4.0.0-beta.1",
-    "vite-plugin-node-polyfills": "^0.22.0"
+    "vite-plugin-node-polyfills": "^0.22.0",
+    "tsup": "^8.2.4"
   }
 }
