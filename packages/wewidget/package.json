@@ -1,7 +1,17 @@
 {
-  "name": "@wecasino/monorepo",
+  "name": "@wecasino/wewidget",
   "version": "0.1.0",
   "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": ""
@@ -10,28 +20,24 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
-  "workspaces": [
-    "packages/*",
-    "examples/*",
-    "website"
-  ],
   "scripts": {
-    "dev": "pnpm -r --filter='./packages/wewidget' run dev",
-    "build": "pnpm -r --filter='./packages/wewidget' run build",
-    "start": "cd sites/kit.svelte.dev && npm run dev"
+    "dev": "vite --port 3100",
+    "build": "tsup --out-dir dist",
+    "preview": "vite preview",
+    "example": "http-server -p 8101 -o ./example"
   },
   "dependencies": {
     "lit": "^3.1.2",
     "@lit/context": "^1.1.0",
+    "@wecasino/weroadmap": "workspace:*",
     "js-sha3": "^0.9.3",
     "immer": "^10.0.4",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/node": "^20.14.10",
-    "@wecasino/weroadmap": "workspace:*",
-    "@wecasino/wewidget": "workspace:*",
     "ts-lit-plugin": "^2.0.2",
+    "tsup": "^8.2.4",
     "typescript": "^5.2.2",
     "vite": "^5.2.0"
   }

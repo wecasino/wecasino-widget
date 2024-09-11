@@ -1,6 +1,6 @@
 import { ReactiveController, ReactiveControllerHost } from "lit";
 
-import { calcBAStats } from "@wegdevio/roadmap-ts-lib";
+import { calcBAStats } from "@wecasino/weroadmap";
 
 import configStore from "../stores/configStore";
 import gameStore from "../stores/gameStore";

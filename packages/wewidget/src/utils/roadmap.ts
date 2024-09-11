@@ -9,7 +9,7 @@ import {
   plotGrid,
   type PlotOption,
   plotR234Road,
-} from "@wegdevio/roadmap-ts-lib";
+} from "@wecasino/weroadmap";
 
 type RoadmapBackgroundMode = "dark" | "light";
 
@@ -59,8 +59,8 @@ export const drawBead: RoadmapDrawFn = ({
 
   const pointFn = (c: Checker) => {
     if (gameType === "DT")
-      return c.data?.w === 1 ? c.data?.bv ?? 0 : c.data?.pv ?? 0;
-    return c.data?.w === 1 ? c.data?.bv ?? 0 : c.data?.pv ?? 0;
+      return c.data?.w === 1 ? (c.data?.bv ?? 0) : (c.data?.pv ?? 0);
+    return c.data?.w === 1 ? (c.data?.bv ?? 0) : (c.data?.pv ?? 0);
   };
 
   const rm = calcRoadmap({ data, r0MaxCol: cols });

@@ -9,6 +9,7 @@ export default defineConfig({
   entry: ["src/index.ts"],
   replaceNodeEnv: true,
   clean: true,
+  shims: true,
   define: {
     "process.env.NODE_ENV": JSON.stringify("production"),
   },
