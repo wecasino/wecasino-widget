@@ -25,6 +25,12 @@ export class WeGamePreview extends LitElement {
   @property({ attribute: "width" })
   width = "";
 
+  @property({ attribute: "roadmap-background" })
+  roadmapBackground = "white";
+
+  @property({ attribute: "roadmap-mode" })
+  roadmapMode = "light";
+
   @property({ attribute: "with-footer" })
   withFooter = "true";
 
@@ -63,7 +69,7 @@ export class WeGamePreview extends LitElement {
       gameType: "BA",
       data: accumCards,
       mode: "standard" || "",
-      backgroundMode: "light",
+      backgroundMode: this.roadmapMode === "dark" ? "dark" : "light",
       // askRoadWinner,
       // plotOption: {
       //   gameType,
@@ -116,6 +122,10 @@ export class WeGamePreview extends LitElement {
     const containerStyle: StyleInfo = {};
     if (this.width) containerStyle.width = this.width;
 
+    const roadmapContainerStyle: StyleInfo = {};
+    if (this.roadmapBackground)
+      roadmapContainerStyle.backgroundColor = this.roadmapBackground;
+
     return html`
     <div class="container" style=${styleMap(containerStyle)}>
       <div class="cover">
@@ -127,7 +137,7 @@ export class WeGamePreview extends LitElement {
         </div>
         <div class=${classMap(statusFlagClasses)}>${statusMsg}</div>
       </div>
-      <div class="roadmap-container">
+      <div class="roadmap-container" style=${styleMap(roadmapContainerStyle)}>
         <div class="roadmap-content">
           <div class="roadmap">
             <img
