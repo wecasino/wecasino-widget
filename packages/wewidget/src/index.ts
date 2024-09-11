@@ -1,4 +1,4 @@
-import WeClient from "./client";
+import WeClient from "./core/client";
 import { WeGamePreview, WeSpacer } from "./components";
 
 // // @ts-ignore

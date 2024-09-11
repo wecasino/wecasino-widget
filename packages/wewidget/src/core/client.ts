@@ -1,7 +1,7 @@
-import configStore, { FooterConfig } from "./stores/configStore";
-import gameStore from "./stores/gameStore";
-import { GameInfoResult, GameRoundResult } from "./types";
-import { genWidgetToken } from "./utils/token";
+import configStore, { FooterConfig } from "../stores/configStore";
+import gameStore from "../stores/gameStore";
+import { GameInfoResult, GameRoundResult } from "../types";
+import { genWidgetToken } from "./token";
 
 type WeClientConfig = {
   appKey: string;
@@ -25,6 +25,14 @@ class WeClient {
 
   constructor(cfg: WeClientConfig) {
     this._cfg = cfg;
+  }
+
+  public getConfigStore() {
+    return configStore;
+  }
+
+  public getGameStore() {
+    return gameStore;
   }
 
   public listenGameUpdates(gameCodes: string) {
