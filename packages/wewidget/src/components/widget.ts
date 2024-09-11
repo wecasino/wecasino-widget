@@ -8,8 +8,8 @@ import { GamePreviewController } from "./controller";
 import { locales } from "./locale";
 import { drawBig } from "../core";
 
-@customElement("we-game-preview")
-export class WeGamePreview extends LitElement {
+@customElement("we-game-widget")
+export class WeGameWidget extends LitElement {
   @property()
   gameCode = "";
 

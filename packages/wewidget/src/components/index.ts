@@ -1,11 +1,9 @@
-import { WeSpacer } from "./Spacer";
-import { WeGamePreview } from "./WeGamePreview";
+import { WeGameWidget } from "./widget";
 
-export { WeSpacer, WeGamePreview };
+export { WeGameWidget };
 
 declare global {
   interface HTMLElementTagNameMap {
-    "we-game-preview": WeGamePreview;
-    "we-spacer": WeSpacer;
+    "we-game-widget": WeGameWidget;
   }
 }
