@@ -13,7 +13,6 @@ export default defineConfig([
     entry: ["src/index.ts"],
     clean: true,
     shims: true,
-    external: [/lit/, /immer/, /zustand/],
   },
   {
     dts: true,
@@ -23,7 +22,6 @@ export default defineConfig([
     format: "cjs",
     entry: ["src/index.ts"],
     shims: true,
-    external: [/lit/, /immer/, /zustand/],
   },
   {
     platform: "browser",
@@ -33,6 +31,8 @@ export default defineConfig([
     entry: ["src/index.ts"],
     replaceNodeEnv: true,
     shims: true,
+    noExternal: [/(.*)/],
+    splitting: false,
     define: {
       "process.env.NODE_ENV": JSON.stringify("production"),
     },
