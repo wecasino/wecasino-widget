@@ -1,6 +1,6 @@
 # WeWidget Releases
 
-## v0.1.0
+## v0.1.1
 
 Date: 2024-09-11
 
