@@ -3,5 +3,9 @@
     "text": "Guide",
     "link": "/guide/get-started/introduction",
     "activeMatch": "/guide/"
+  },
+  {
+    "text": "Change logs",
+    "link": "changelog"
   }
 ]
