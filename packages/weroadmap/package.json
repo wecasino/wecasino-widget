@@ -11,5 +11,13 @@
     },
     "files": [
       "lib"
-    ]
+    ],
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/wecasino/wecasino-widget.git"
+    },
+    "license": "MIT",
+    "publishConfig": {
+      "registry": "https://npm.pkg.github.com"
+    }
 }
