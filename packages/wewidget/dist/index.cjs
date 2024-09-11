@@ -198,4 +198,5 @@
     .hidden {
       display: none;
     }
-  `,c([(0,f.property)()],d.prototype,"gameCode",2),c([(0,f.property)({attribute:"footer-padding"})],d.prototype,"footerPadding",2),c([(0,f.property)({attribute:"footer-color"})],d.prototype,"footerColor",2),c([(0,f.property)({attribute:"footer-background"})],d.prototype,"footerBackground",2),c([(0,f.property)({attribute:"width"})],d.prototype,"width",2),c([(0,f.property)({attribute:"with-footer"})],d.prototype,"withFooter",2),c([(0,f.property)()],d.prototype,"title",2),d=c([(0,f.customElement)("we-game-preview")],d);
+  `,c([(0,f.property)()],d.prototype,"gameCode",2),c([(0,f.property)({attribute:"footer-padding"})],d.prototype,"footerPadding",2),c([(0,f.property)({attribute:"footer-color"})],d.prototype,"footerColor",2),c([(0,f.property)({attribute:"footer-background"})],d.prototype,"footerBackground",2),c([(0,f.property)({attribute:"width"})],d.prototype,"width",2),c([(0,f.property)({attribute:"with-footer"})],d.prototype,"withFooter",2),c([(0,f.property)()],d.prototype,"title",2),d=c([(0,f.customElement)("we-game-preview")],d);0&&(module.exports={WeClient,WeGamePreview,WeSpacer});
+//# sourceMappingURL=index.cjs.map
