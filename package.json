@@ -13,7 +13,7 @@
   "workspaces": [
     "packages/*",
     "examples/*",
-    "website"
+    "site"
   ],
   "scripts": {
     "dev": "pnpm -r --filter='./packages/wewidget' run dev",
