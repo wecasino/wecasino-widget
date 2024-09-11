@@ -68,7 +68,7 @@ export class WeGamePreview extends LitElement {
       cols,
       gameType: "BA",
       data: accumCards,
-      mode: "standard" || "",
+      mode: "standard",
       backgroundMode: this.roadmapMode === "dark" ? "dark" : "light",
       // askRoadWinner,
       // plotOption: {
