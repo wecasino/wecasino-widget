@@ -1,5 +1,13 @@
 # WeWidget Releases
 
+## v0.2.0
+
+Date: 2024-09-11
+
+### What's Changed
+
+- global `weClientInstance`
+
 ## v0.1.1
 
 Date: 2024-09-11

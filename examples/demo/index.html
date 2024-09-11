@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>We Widget Demo</title>
     <link rel="stylesheet" href="./index.css" />
-    <script src="./wewidget-v0.1.1.js?222"></script>
+    <script src="./wewidget-v0.2.0.js"></script>
     <script>
-      let client;
       function onSubmit() {
         const token = document.getElementById("token");
         const languageElem = document.getElementById("language");
@@ -15,32 +14,26 @@
         const env = envElem?.value || "snd";
         const operCode = env === "snd" ? "weguest_ag3nP0D" : "weguest_agqJgF5";
 
-        if (wewidget.WeClient) {
-          client = new wewidget.WeClient({
-            // ask we to provide
-            operCode: operCode,
-            // ask we to provide
-            appKey: "v1_81qFsUWYEfMgJaYtwjVDTbyFyXE5J4NpaTZDdDaq1HsL",
-            sandbox: env === "snd",
-            // for custom data url
-            // dataUrl: "ws://localhost:16000/widgetws",
-            onOpen: () => console.info("socket open"),
-            onError: (e) => console.info("socket error", e),
-            onClose: (e) => console.info("socket closed", e),
-          });
+        const lang = languageElem?.value || "en";
+        wewidget.weClientInstance.setLanguage(lang);
 
-          const lang = languageElem?.value || "en";
-          client.setLanguage(lang);
-
-          client.connect();
-        }
+        wewidget.weClientInstance.connect({
+          // ask we to provide
+          operCode: operCode,
+          // ask we to provide
+          appKey: "v1_81qFsUWYEfMgJaYtwjVDTbyFyXE5J4NpaTZDdDaq1HsL",
+          sandbox: env === "snd",
+          // for custom data url
+          // dataUrl: "ws://localhost:16000/widgetws",
+          onOpen: () => console.info("socket open"),
+          onError: (e) => console.info("socket error", e),
+          onClose: (e) => console.info("socket closed", e),
+        });
       }
 
       function onLangChange(e) {
-        if (client) {
-          const lang = e.value;
-          client.setLanguage(lang);
-        }
+        const lang = e.value;
+        wewidget.weClientInstance.setLanguage(lang);
       }
     </script>
     <style>
@@ -126,7 +119,6 @@
           <div class="label">Game Code: STUDIO-BBA-4<br />width: 240px</div>
           <div class="wrapper">
             <we-game-preview
-            client={client} 
               gamecode="STUDIO-BAA-4"
               width="240px"
             ></we-game-preview>
@@ -140,7 +132,6 @@
           </div>
           <div class="wrapper round-wrapper">
             <we-game-preview
-            client={client} 
               gamecode="STUDIO-BAA-5"
               footer-color="blue"
               footer-background="red"
@@ -158,7 +149,6 @@
           </div>
           <div class="wrapper">
             <we-game-preview
-            client={client} 
               gamecode="STUDIO-BAA-15"
               with-footer="false"
               roadmap-background="transparent"
