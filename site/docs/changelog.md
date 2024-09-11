@@ -7,6 +7,7 @@ Date: 2024-09-11
 ### What's Changed
 
 - global `weClientInstance`
+- rename `we-game-preview` to `we-game-widget`
 
 ## v0.1.1
 
