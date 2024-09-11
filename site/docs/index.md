@@ -3,18 +3,13 @@ pageType: home
 
 hero:
   name: wecasino widget
-  text: wecasino widget
-  tagline: wecasino widget tagline
   actions:
     - theme: brand
       text: Quick Start
-      link: /guide/
+      link: /guide/get-started
     - theme: alt
       text: GitHub
-      link: https://github.com/web-infra-dev/rspress
-  image:
-    src: /rspress-icon.png
-    alt: wecasino widget Logo
+      link: https://github.com/wecasino/wecasino-widget
 features:
   - title: Blazing fast build speed
     details: The core compilation module is based on the Rust front-end toolchain, providing a more ultimate development experience.

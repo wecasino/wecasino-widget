@@ -1,0 +1,115 @@
+---
+title: 快速接入
+sidebar_position: 2
+---
+
+# 快速接入
+
+
+## 在线示例
+
+我们提供了基于 Wewidget 的在线示例，通过示例项目，你可以直观感受 Wewidget 在網頁中的效果及設定
+
+- [Wewidget demo 示例](https://github.com/wecasino/wecasino-widget)
+
+
+## 在純thml網頁中引入及使用
+
+```html title="index.html"
+
+
+
+
+```
+
+
+
+## 在react項目中引入及使用
+
+
+### 安装插件
+
+先在項目中新增或修改 .npmrc
+
+```bash title=".npmrc"
+
+registry=https://registry.npmjs.org/
+@wecasino:registry=https://npm.pkg.github.com
+
+```
+
+你可以通过如下的命令安装插件:
+
+```bash
+
+pnpm add @wecasino/wewidget
+
+```
+
+
+## 示例
+
+```jsx title="App.jsx"
+import Logo from './logo.svg?react';
+
+export const App = () => <Logo />;
+```
+
+## 选项
+
+如果你需要自定义 SVGR 的编译行为，可以使用以下配置项：
+
+- **类型：**
+
+```ts
+type PluginSvgrOptions = {
+  /**
+   * 修改 SVGR 选项
+   */
+  svgrOptions?: import('@svgr/core').Config;
+  /**
+   * 是否允许同时使用默认导入和具名导入
+   * @default false
+   */
+  mixedImport?: boolean;
+};
+```
+
+
+### wewidgetOptions
+
+用于修改 wewidget 的选项
+
+- **类型：** `import('@wecasino/wewidget').Config`
+- **默认值：**
+
+```ts
+const defaultSvgrOptions = {
+  svgo: true,
+  svgoConfig: {
+    plugins: [
+      {
+        name: 'preset-default',
+        params: {
+          overrides: {
+            removeViewBox: false,
+          },
+        },
+      },
+      'prefixIds',
+    ],
+  },
+};
+```
+
+- **示例：**
+
+```ts
+pluginSvgr({
+  svgrOptions: {
+    svgoConfig: {
+      datauri: 'base64',
+    },
+  },
+});
+```
