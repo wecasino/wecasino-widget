@@ -1,5 +1,3 @@
-import configStore from "../stores/configStore";
-
 // TODO: add more locale or move to separate JSON files
 const en = {
   "status.sitting": "Already on this table",
@@ -113,7 +111,7 @@ const vi = {
   "common.state.maintenance": "đã ở bàn này",
 };
 
-const locales: { [key: string]: { [key: string]: string } } = {
+export const locales: { [key: string]: { [key: string]: string } } = {
   en,
   zh,
   cn,
@@ -129,11 +127,3 @@ const locales: { [key: string]: { [key: string]: string } } = {
   tr,
   vi,
 };
-
-export const t = (key: string) => {
-  const lang = configStore.getState().language || "";
-  const value = locales[lang]?.[key] || key;
-  return value;
-};
-
-export default { t };

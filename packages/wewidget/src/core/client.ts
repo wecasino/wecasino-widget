@@ -1,9 +1,11 @@
-import configStore, { FooterConfig } from "../stores/configStore";
-import gameStore from "../stores/gameStore";
-import { GameInfoResult, GameRoundResult } from "../types";
+"use client";
+
+import createConfigStore, { FooterConfig } from "./configStore";
+import createGameStore from "./gameStore";
+import { GameInfoResult, GameRoundResult } from "./types";
 import { genWidgetToken } from "./token";
 
-type WeClientConfig = {
+export type WeClientConfig = {
   appKey: string;
   operCode: string;
   token?: string;
@@ -15,24 +17,23 @@ type WeClientConfig = {
   onError?: (e: Event) => void;
 };
 
-export const sndUrl = "wss://uat-weg-gdsapi.wehosts247.com/widgetws";
-export const prdUrl = "wss://nc-gdsapi.worldonlinegame.com/widgetws";
+const sndUrl = "wss://uat-weg-gdsapi.wehosts247.com/widgetws";
+const prdUrl = "wss://nc-gdsapi.worldonlinegame.com/widgetws";
 
 class WeClient {
   private _cfg: WeClientConfig;
   private _ws?: WebSocket;
   private _rcIntv?: any;
 
-  constructor(cfg: WeClientConfig) {
-    this._cfg = cfg;
+  private _configStore = createConfigStore();
+  private _gameStore = createGameStore();
+
+  public get configStore() {
+    return this._configStore;
   }
 
-  public getConfigStore() {
-    return configStore;
-  }
-
-  public getGameStore() {
-    return gameStore;
+  public get gameStore() {
+    return this._gameStore;
   }
 
   public listenGameUpdates(gameCodes: string) {
@@ -40,14 +41,15 @@ class WeClient {
   }
 
   public updateFooterConifg(config: FooterConfig) {
-    configStore.getState().updateFooterConfig(config);
+    this._configStore.getState().updateFooterConfig(config);
   }
 
   public setLanguage(lang: string) {
-    configStore.getState().setLanguage(lang);
+    this._configStore.getState().setLanguage(lang);
   }
 
-  public connect() {
+  public connect(cfg: WeClientConfig) {
+    this._cfg = cfg;
     this._connect();
   }
 
@@ -102,13 +104,19 @@ class WeClient {
     const data = JSON.parse(dataString);
     if (data.gameInfos) {
       const gameInfos = data.gameInfos as GameInfoResult[];
-      gameStore.getState().updateGameInfos(gameInfos);
+      this._gameStore.getState().updateGameInfos(gameInfos);
     }
     if (data.gameRounds) {
       const gameRounds = data.gameRounds as GameRoundResult[];
-      gameStore.getState().updateGameRounds(gameRounds);
+      this._gameStore.getState().updateGameRounds(gameRounds);
     }
   }
 }
 
-export default WeClient;
+const weClientInstance = new WeClient();
+
+// expose client instance to the window object
+// @ts-ignore
+window.weClientInstance = weClientInstance;
+
+export { WeClient, weClientInstance };

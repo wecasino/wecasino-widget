@@ -5,7 +5,7 @@ export { WeSpacer, WeGamePreview };
 
 declare global {
   interface HTMLElementTagNameMap {
-    "we-spacer": WeSpacer;
     "we-game-preview": WeGamePreview;
+    "we-spacer": WeSpacer;
   }
 }

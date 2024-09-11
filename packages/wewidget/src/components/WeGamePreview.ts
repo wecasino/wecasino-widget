@@ -3,10 +3,10 @@ import { customElement, property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { styleMap, StyleInfo } from "lit/directives/style-map.js";
 
-import maintenanceIcon from "../assets/maintenance-icon.svg";
-import { GamePreviewController } from "../controllers/gamePreview";
-import { drawBig } from "../utils/roadmap";
-import { t } from "../locale";
+import { MaintenanceIcon } from "./icon";
+import { GamePreviewController } from "./controller";
+import { locales } from "./locale";
+import { drawBig } from "../core";
 
 @customElement("we-game-preview")
 export class WeGamePreview extends LitElement {
@@ -37,10 +37,11 @@ export class WeGamePreview extends LitElement {
   @property()
   title = "";
 
-  private ctrl = new GamePreviewController(this);
+  private ctrl: GamePreviewController;
 
   public connectedCallback(): void {
     super.connectedCallback();
+    this.ctrl = new GamePreviewController(this);
     this.ctrl.gameCode = this.gameCode;
     this.ctrl.connectStore();
   }
@@ -81,11 +82,17 @@ export class WeGamePreview extends LitElement {
     return svgContent;
   }
 
+  private tr(key: string) {
+    const lang = this.ctrl.client.configStore.getState().language || "";
+    const value = locales[lang]?.[key] || key;
+    return value;
+  }
+
   renderFooter() {
     const hasFooter = this.withFooter === "true";
     if (!hasFooter) return html``;
     const { title } = this.ctrl.getGameInfos();
-    const config = this.ctrl.getConfig();
+    const config = this.ctrl.client.configStore.getState();
     const footerBackgroundColor =
       this.footerBackground || config.footer.backgroundColor || "";
     const footerTextColor = this.footerColor || config.footer.textColor || "";
@@ -112,7 +119,7 @@ export class WeGamePreview extends LitElement {
       ["sitting", "new_shoe", "settling", "card_dealing"].indexOf(
         gameStateFlag
       ) > -1
-        ? t(`status.${gameStateFlag}`)
+        ? this.tr(`status.${gameStateFlag}`)
         : "";
     const statusFlagClasses = {
       "status-flag": true,
@@ -153,8 +160,8 @@ export class WeGamePreview extends LitElement {
         "maintence-container": true,
         hidden: !isMaintenance,
       })}>
-        <div class="icon"><img class="image" src=${maintenanceIcon}></img></div>
-        <div class="text">${t("common.state.maintenance")}</div>
+        <div class="icon"><img class="image" src=${MaintenanceIcon}></img></div>
+        <div class="text">${this.tr("common.state.maintenance")}</div>
       </div>
       ${this.renderFooter()}
       <div class=${classMap({

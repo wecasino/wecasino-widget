@@ -1,10 +1,7 @@
 import { ReactiveController, ReactiveControllerHost } from "lit";
 
 import { calcBAStats } from "@wecasino/weroadmap";
-
-import configStore from "../stores/configStore";
-import gameStore from "../stores/gameStore";
-import { Game } from "../types";
+import { Game, weClientInstance } from "../core";
 
 const RoundState = {
   SHUFFLE: "shuffle",
@@ -33,9 +30,13 @@ export class GamePreviewController implements ReactiveController {
   private _unsubConfigStore: () => void;
   private _unsubGameStore: () => void;
 
+  public get client() {
+    return weClientInstance;
+  }
+
   public set gameCode(gameCode: string) {
     this._gameCode = gameCode;
-    gameStore.getState().updateGameCode(this._gameCode);
+    this.client.gameStore.getState().updateGameCode(this._gameCode);
   }
 
   public get gameCode() {
@@ -59,10 +60,10 @@ export class GamePreviewController implements ReactiveController {
   }
 
   public connectStore() {
-    this._unsubConfigStore = configStore.subscribe(
+    this._unsubConfigStore = this.client.configStore.subscribe(
       this.subScribeConfigstore.bind(this)
     );
-    this._unsubGameStore = gameStore.subscribe(
+    this._unsubGameStore = weClientInstance.gameStore.subscribe(
       this.subScribeGametore.bind(this)
     );
   }
@@ -73,14 +74,14 @@ export class GamePreviewController implements ReactiveController {
   }
 
   public get game(): Game {
-    const games = gameStore.getState().games;
+    const games = this.client.gameStore.getState().games;
     const game = games[this.gameCode] || {};
     return game;
   }
 
   public getGameInfos() {
     const game = this.game;
-    const language = this.getConfig().language;
+    const language = this.client.configStore.getState().language;
     const title =
       game?.gameInfo?.gameDescr?.[language || ""] ||
       game?.gameInfo?.gameDescr?.zh ||
@@ -136,9 +137,5 @@ export class GamePreviewController implements ReactiveController {
       coverImageUrl,
       gameStateFlag,
     };
-  }
-
-  public getConfig() {
-    return configStore.getState();
   }
 }

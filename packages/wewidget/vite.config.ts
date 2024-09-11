@@ -1,7 +1,5 @@
 import { resolve } from "path";
 import { defineConfig } from "vite";
-import { nodePolyfills } from "vite-plugin-node-polyfills";
-import dts from "vite-plugin-dts";
 import pkg from "./package.json";
 
 // https://vitejs.dev/guide/build.html#library-mode
@@ -25,5 +23,4 @@ export default defineConfig({
       },
     },
   },
-  plugins: [nodePolyfills(), dts()],
 });
