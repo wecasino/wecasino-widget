@@ -160,7 +160,9 @@ export class WeGameWidget extends LitElement {
         "maintence-container": true,
         hidden: !isMaintenance,
       })}>
-        <div class="icon"><img class="image" src=${MaintenanceIcon}></img></div>
+        <div class="icon"><img class="image" src=${`data:image/svg+xml;utf8,${encodeURIComponent(
+          MaintenanceIcon
+        )}`}></img></div>
         <div class="text">${this.tr("common.state.maintenance")}</div>
       </div>
       ${this.renderFooter()}
