@@ -20,7 +20,7 @@ type RoadmapDrawFn = (props: {
   mode?: string;
   backgroundMode?: RoadmapBackgroundMode;
   // askRoadWinner?: number;
-  // plotOption?: PlotOption;
+  plotOption?: PlotOption;
   // zoomedId?: string;
 }) => string;
 
@@ -50,7 +50,7 @@ export const drawBead: RoadmapDrawFn = ({
   mode,
   backgroundMode,
   // askRoadWinner,
-  // plotOption,
+  plotOption,
 }) => {
   const rows = 6;
   const w = 50 * cols;
@@ -59,8 +59,8 @@ export const drawBead: RoadmapDrawFn = ({
 
   const pointFn = (c: Checker) => {
     if (gameType === "DT")
-      return c.data?.w === 1 ? (c.data?.bv ?? 0) : (c.data?.pv ?? 0);
-    return c.data?.w === 1 ? (c.data?.bv ?? 0) : (c.data?.pv ?? 0);
+      return c.data?.w === 1 ? c.data?.bv ?? 0 : c.data?.pv ?? 0;
+    return c.data?.w === 1 ? c.data?.bv ?? 0 : c.data?.pv ?? 0;
   };
 
   const rm = calcRoadmap({ data, r0MaxCol: cols });
@@ -70,7 +70,7 @@ export const drawBead: RoadmapDrawFn = ({
     ...defaultPlotOption,
     mode: beadMode,
     pointFn,
-    // ...plotOption,
+    ...plotOption,
   };
   let rt0 = rm.rt0;
   // if (askRoadWinner && askRoadWinner > 0) {

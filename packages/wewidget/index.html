@@ -7,8 +7,8 @@
     <title>We</title>
     <link rel="stylesheet" href="./index.css" />
     <script type="module" src="/src/index.ts"></script>
+    <script type="module" src="/src/react/main.tsx"></script>
     <script>
-      
       function onSubmit() {
         console.info("weClientInstance", weClientInstance);
         const token = document.getElementById("token");
@@ -17,25 +17,25 @@
         const operCode = env === "snd" ? "weguest_ag3nP0D" : "weguest_agqJgF5";
 
         const languageElem = document.getElementById("language");
-          const lang = languageElem?.value || "en";
-          weClientInstance.setLanguage(lang);
-          weClientInstance.connect({
-            // ask we to provide
-            operCode: operCode,
-            // ask we to provide
-            appKey: "v1_81qFsUWYEfMgJaYtwjVDTbyFyXE5J4NpaTZDdDaq1HsL",
-            sandbox: env === "snd",
-            // for custom data url
-            // dataUrl: "ws://localhost:16000/widgetws",
-            onOpen: () => console.info("socket open"),
-            onError: (e) => console.info("socket error", e),
-            onClose: (e) => console.info("socket closed", e)
-          });
+        const lang = languageElem?.value || "en";
+        weClientInstance.setLanguage(lang);
+        weClientInstance.connect({
+          // ask we to provide
+          operCode: operCode,
+          // ask we to provide
+          appKey: "v1_81qFsUWYEfMgJaYtwjVDTbyFyXE5J4NpaTZDdDaq1HsL",
+          sandbox: env === "snd",
+          // for custom data url
+          // dataUrl: "ws://localhost:16000/widgetws",
+          onOpen: () => console.info("socket open"),
+          onError: (e) => console.info("socket error", e),
+          onClose: (e) => console.info("socket closed", e),
+        });
       }
 
       function onLangChange(e) {
-          const lang = e.value;
-          globalClient.setLanguage(lang);
+        const lang = e.value;
+        globalClient.setLanguage(lang);
       }
     </script>
     <style>
@@ -73,6 +73,11 @@
       .label {
         max-width: 300px;
         font-weight: 500;
+      }
+
+      #root {
+        width: 100%;
+        height: auto;
       }
     </style>
   </head>
@@ -161,5 +166,6 @@
         </div>
       </div>
     </div>
+    <div id="root"></div>
   </body>
 </html>

@@ -3,10 +3,8 @@ import { customElement, property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { styleMap, StyleInfo } from "lit/directives/style-map.js";
 
-import { MaintenanceIcon } from "./icon";
 import { GamePreviewController } from "./controller";
-import { locales } from "./locale";
-import { drawBig } from "../core";
+import { drawBig, locales, MaintenanceIcon } from "../core";
 
 @customElement("we-game-widget")
 export class WeGameWidget extends LitElement {
