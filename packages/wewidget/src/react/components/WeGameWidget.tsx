@@ -133,6 +133,11 @@ const debounce = (fn: Function, ms = 300) => {
   };
 };
 
+const checkLang = (lang: string) => {
+  if (["en", "zh", "cn"].includes(lang)) return lang;
+  return "en";
+};
+
 const WeGameWidget = ({
   gameCode,
   backgroundColor,
@@ -188,7 +193,7 @@ const WeGameWidget = ({
       mode: "standard" || "",
       backgroundMode: roadmapMode === "dark" ? "dark" : "light",
       plotOption: {
-        lang: language as Lang,
+        lang: checkLang(language || "") as Lang,
       },
       // askRoadWinner,
       // plotOption: {

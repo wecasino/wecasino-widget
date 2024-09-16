@@ -27,5 +27,9 @@ export default () => {
     });
   };
 
-  return { connectClient };
+  const setLanguage = (lang: string) => {
+    weClientInstance.setLanguage(lang);
+  };
+
+  return { connectClient, setLanguage };
 };
