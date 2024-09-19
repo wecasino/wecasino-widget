@@ -1,4 +1,5 @@
 import useWeClient from "./hooks/useWeClient";
+import useGreatRoads from "./hooks/useGreatRoads";
 import WeGameWidget from "./components/WeGameWidget";
 import React, { ReactNode, useState } from "react";
 
@@ -52,6 +53,7 @@ const App = () => {
   const [env, setEnv] = useState("snd");
   const [lang, setLang] = useState("en");
   const { connectClient, setLanguage } = useWeClient();
+  useGreatRoads();
   const handleChange = (e: any) => {
     const value = e?.target?.value;
     setEnv(value);

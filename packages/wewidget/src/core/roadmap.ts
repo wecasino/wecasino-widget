@@ -213,3 +213,50 @@ export const drawBig: RoadmapDrawFn = ({
   svg += plotEnd();
   return svg;
 };
+
+/** 長庄 */
+export const grtLongBanker = "LONGB";
+/** 長閒  */
+export const grtLongPlayer = "LONGP";
+/** 拍拍黐 */
+export const grtLongBankerLongPlayer = "LONGBLONGP";
+/** 大路單跳 */
+export const grtSingleJump = "SINGLEJ";
+/** 一廳兩房 (庄) */
+export const grtOneHallTwoRoomBanker = "OHTRB";
+/** 一廳兩房 (閒) */
+export const grtOneHallTwoRoomPlayer = "OHTRP";
+/** 逢庄黐 */
+export const grtStickOnBanker = "STICKB";
+/** 逢閒黐 */
+export const grtStickOnPlayer = "STICKP";
+/** 隔黐庄 */
+export const grtSeparateFromBanker = "SEPB";
+/** 隔黐閒 */
+export const grtSeparateFromPlayer = "SEPP";
+
+export const allGreatRoads = [
+  grtLongBankerLongPlayer,
+  grtLongBanker,
+  grtLongPlayer,
+  grtSingleJump,
+  grtOneHallTwoRoomBanker,
+  grtOneHallTwoRoomPlayer,
+  grtStickOnBanker,
+  grtStickOnPlayer,
+  grtSeparateFromBanker,
+  grtSeparateFromPlayer,
+];
+
+export const greatRoadsLocales: { [k: string]: string } = {
+  [grtLongBankerLongPlayer]: "gr.LONGBLONGP",
+  [grtLongBanker]: "gr.LONGB",
+  [grtLongPlayer]: "gr.LONGP",
+  [grtSingleJump]: "gr.SINGLEJ",
+  [grtOneHallTwoRoomBanker]: "gr.OHTRB",
+  [grtOneHallTwoRoomPlayer]: "gr.OHTRP",
+  [grtStickOnBanker]: "gr.STICKB",
+  [grtStickOnPlayer]: "gr.STICKP",
+  [grtSeparateFromBanker]: "gr.SEPB",
+  [grtSeparateFromPlayer]: "gr.SEPP",
+};
