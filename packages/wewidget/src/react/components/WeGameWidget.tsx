@@ -181,6 +181,12 @@ const WeGameWidget = ({
     calcRoadmapContainerWidth();
   }, [roadmapContainerRef.current, width]);
 
+  useEffect(() => {
+    window.addEventListener("resize", calcRoadmapContainerWidth);
+    return () =>
+      window.removeEventListener("resize", calcRoadmapContainerWidth);
+  }, []);
+
   const getBeadRoadmapContent = ({ accumCards }: { accumCards: string[] }) => {
     const drawFn = drawBead;
     const w = containerWidth * 0.53;
@@ -236,6 +242,7 @@ const WeGameWidget = ({
       style={{
         position: "relative",
         width: width || "30rem",
+        boxSizing: "border-box",
         height: "auto",
         background: backgroundColor || "#0e1328",
         borderRadius: borderRadius || "0.25rem",

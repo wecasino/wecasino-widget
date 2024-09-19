@@ -146,6 +146,16 @@ const App = () => {
           roadmapMode="dark"
         />
       </Item>
+      <Item style={{ width: "100%" }}>
+        <Labels
+          points={[
+            "Game Code: STUDIO-BAA-15",
+            "width: 100%",
+            "item container width: 100%",
+          ]}
+        />
+        <WeGameWidget gameCode="STUDIO-BAA-15" width="100%" />
+      </Item>
       <Item>
         <Labels points={["Game Code: STUDIO-BBA-5"]} />
         <WeGameWidget gameCode="STUDIO-BAA-5" />
