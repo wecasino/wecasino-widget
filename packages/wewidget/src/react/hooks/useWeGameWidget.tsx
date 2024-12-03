@@ -68,8 +68,10 @@ export default ({ gameCode }: { gameCode: string }) => {
   }
   const isMaintenance = gameState === "maintenance" || gameState === "disable";
 
+  const gameType = game?.gameInfo?.gameType;
   return {
     game,
+    gameType,
     title,
     stats,
     gameState,

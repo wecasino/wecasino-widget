@@ -9,6 +9,11 @@ import {
   plotGrid,
   type PlotOption,
   plotR234Road,
+  calcCGRoadmap,
+  plotCGBeadRoad,
+  plotCGBegin,
+  plotCGv2Begin,
+  plotCGv2eadRoad,
 } from "@wecasino/weroadmap";
 
 type RoadmapBackgroundMode = "dark" | "light";
@@ -40,6 +45,24 @@ const getPlotOptionByBackgroundMode = (
         dotOpacity: 0.1,
         checkerPadding: 2,
         baBeadDotStrokeColor: "#000000",
+      };
+};
+
+const getCGPlotOptionByBackgroundMode = (
+  mode: RoadmapBackgroundMode = "dark"
+): PlotOption => {
+  return mode === "light"
+    ? {
+        hasDots: true,
+        dotColor: "black",
+        dotOpacity: 0.1,
+        checkerPadding: 4,
+      }
+    : {
+        hasDots: true,
+        dotColor: "white",
+        dotOpacity: 0.1,
+        checkerPadding: 4,
       };
 };
 
@@ -210,6 +233,115 @@ export const drawBig: RoadmapDrawFn = ({
   // }
   let svg = plotBegin(w, h, w, h, false, bigPlotOption);
   svg += plotBigRoad(rt1, cols, rows, w, h, 0, 0, 1, bigPlotOption);
+  svg += plotEnd();
+  return svg;
+};
+
+export const drawCG = ({
+  cols,
+  rows = 1,
+  data,
+  rowSpacing,
+  backgroundMode,
+  isAnimated,
+  isShowSuperGameResult = false,
+  emptyEndCols = 0,
+}: {
+  cols: number;
+  rows?: number;
+  data: string[];
+  emptyEndCols?: number;
+  rowSpacing?: number;
+  isAnimated?: boolean;
+  isShowSuperGameResult?: boolean;
+  backgroundMode: RoadmapBackgroundMode;
+}) => {
+  const size = 50;
+  const rowHeight = size * (isShowSuperGameResult ? 4 : 3);
+  const w = size * cols;
+  const h = rowHeight * rows + (rowSpacing || 0) * (rows - 1);
+
+  const rm = calcCGRoadmap({ data, r0MaxCol: cols });
+  const plotOption = getCGPlotOptionByBackgroundMode(backgroundMode);
+  const roaddata = rm.rt0;
+  let svg = plotCGBegin(w, h, w, h, false, plotOption);
+  svg += plotCGBeadRoad(
+    roaddata,
+    cols,
+    rows,
+    w,
+    h,
+    0,
+    0,
+    emptyEndCols,
+    rowSpacing,
+    isAnimated,
+    isShowSuperGameResult,
+    plotOption
+  );
+  svg += plotEnd();
+  return svg;
+};
+
+export const drawCGV2 = ({
+  cols,
+  rows,
+  data,
+  rowSpacing,
+  backgroundMode,
+  isAnimated = false,
+  isShowSuperGameResult = false,
+  emptyEndCols = 0,
+}: {
+  cols: number;
+  rows: number;
+  data: string[];
+  emptyEndCols?: number;
+  rowSpacing?: number;
+  isAnimated?: boolean;
+  isShowSuperGameResult?: boolean;
+  backgroundMode: RoadmapBackgroundMode;
+}) => {
+  const size = 50;
+  const rowHeight = size * (isShowSuperGameResult ? 4 : 3);
+  const w = size * cols * 1.2;
+  const h = rowHeight * rows + (rowSpacing || 0) * (rows - 1);
+
+  const getPlotOptionByBackgroundMode = (
+    mode: RoadmapBackgroundMode = "dark"
+  ): PlotOption => {
+    return mode === "dark"
+      ? {
+          hasDots: true,
+          dotColor: "transparent",
+          dotOpacity: 0.6,
+        }
+      : {
+          hasDots: true,
+          dotColor: "transparent",
+          dotOpacity: 0.6,
+        };
+  };
+
+  const rm = calcCGRoadmap({ data, r0MaxCol: cols });
+  const plotOption = getPlotOptionByBackgroundMode(backgroundMode);
+  const roaddata = rm.rt0;
+
+  let svg = plotCGv2Begin(w, h, w, h, false, plotOption);
+  svg += plotCGv2eadRoad(
+    roaddata,
+    cols,
+    rows,
+    w,
+    h,
+    0,
+    0,
+    emptyEndCols,
+    rowSpacing,
+    isAnimated,
+    isShowSuperGameResult,
+    plotOption
+  );
   svg += plotEnd();
   return svg;
 };

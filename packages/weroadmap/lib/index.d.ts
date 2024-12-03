@@ -200,7 +200,7 @@ declare const calcBARoadmap: ({ data, turnMode, r0MaxCol, r1MaxCol, r2MaxCol, r3
 };
 
 declare const emptyDICard = "0,0,0";
-declare const createDIDataEntry: (card: string, roadType: 'point' | 'bigSmall' | 'oddEven') => DataEntry;
+declare const createDIDataEntry: (card: string, roadType: 'point' | 'bigSmall' | 'oddEven' | 'history') => DataEntry;
 declare class DICheckerGrid extends CheckerGrid {
     constructor(maxCol: number, turnMode: number);
 }
@@ -211,6 +211,7 @@ declare const calcDIRoadmap: ({ data, r0MaxCol }: {
     rt0: Checker[];
     rt1: Checker[];
     rt2: Checker[];
+    rt3: Checker[];
 };
 declare function analyzeDIBeadRoad(input: DataEntry[], maxCol?: number): CheckerGrid;
 declare function analyzeDIBigRoad(input: DataEntry[], maxCol?: number, turnMode?: number): [ColumnList, CheckerGrid];
@@ -473,6 +474,10 @@ type PlotOption = {
     baBeadDotStrokeColor?: string;
     /** ba only */
     withOnClickEvent?: boolean;
+    /** di only */
+    columnSpacing?: number;
+    /** di only */
+    rowSpacing?: number;
 };
 declare const plotSymDefs: (plotOption?: PlotOption) => string;
 declare const plotBegin: (vw: number, vh: number, w: number | string | undefined, h: number | string | undefined, withoutSymDefs?: boolean, plotOption?: PlotOption) => string;
@@ -487,6 +492,7 @@ declare const plotR234Road: (data: Checker[], x: number, visibleCol: number, vis
 declare const plotStandardFull: (rm: Roadmap, w: number | string | undefined, h: number | string | undefined, withoutSymDefs: boolean | undefined, plotOption?: PlotOption) => string;
 declare const plotWaterfallFull: (rm: Roadmap, w: number | string | undefined, h: number | string | undefined, plotOption?: PlotOption) => string;
 declare const plotDIBeadRoad: (data: Checker[], visibleCol: number, visibleRow: number, w: number | string, h: number | string, locX: number | undefined, locY: number | undefined, multipler?: number | undefined, plotOption?: PlotOption) => string;
+declare const plotDIHistoryRoad: (data: Checker[], visibleCol: number, visibleRow: number, w: number | string, h: number | string, mode: 'oddEven' | 'bigSmall', plotOption?: PlotOption, isAnimate?: boolean, isCompactMode?: boolean) => string;
 declare const plotDIBegin: (vw: number, vh: number, w: number | string | undefined, h: number | string | undefined, withoutSymDefs?: boolean, plotOption?: PlotOption) => string;
 declare const plotDIBigRoad: (data: Checker[], visibleCol: number, visibleRow: number, w: number | string, h: number | string, locX: number | undefined, locY: number | undefined, multipler?: number, plotOption?: PlotOption) => string;
 declare const plotDIOddEvenRoad: (data: Checker[], visibleCol: number, visibleRow: number, w: number | string, h: number | string, locX: number | undefined, locY: number | undefined, multipler?: number, plotOption?: PlotOption) => string;
@@ -496,6 +502,7 @@ declare const plotLWBeadRoad: (data: Checker[], visibleCol: number, visibleRow: 
 declare const plotOXBegin: (vw: number, vh: number, w: number | string | undefined, h: number | string | undefined, withoutSymDefs?: boolean, plotOption?: PlotOption) => string;
 declare const plotOXBigBegin: (vw: number, vh: number, w: number | string | undefined, h: number | string | undefined, withoutSymDefs?: boolean, plotOption?: PlotOption) => string;
 declare const plotOXBeadRoad: (data: OXResult[], visibleCol: number, w: number | string, h: number | string, locX: number | undefined, locY: number | undefined, size?: OXCheckerSize | undefined, multipler?: number | undefined, plotOption?: PlotOption) => string;
+declare const sliceDataRO: (data: Checker[], visibleCol: number, visibleRow: number) => Checker[];
 declare const plotROBegin: (vw: number, vh: number, w: number | string | undefined, h: number | string | undefined, isROL: boolean, withoutSymDefs?: boolean, plotOption?: PlotOption) => string;
 declare const plotROBigRoad: (data: Checker[], visibleCol: number, visibleRow: number, w: number | string, h: number | string, locX: number | undefined, locY: number | undefined, type: 'bigSmall' | 'redBlack' | 'oddEven' | 'point' | 'dozenCol', multipler?: number, plotOption?: PlotOption) => string;
 declare const plotROBeadRoad: (data: Checker[], visibleCol: number, visibleRow: number, w: number | string, h: number | string, locX: number | undefined, locY: number | undefined, multipler?: number, plotOption?: PlotOption) => string;
@@ -509,8 +516,12 @@ declare const plotZJHBigRoad: (data: Checker[], visibleCol: number, visibleRow: 
 declare const plotCGBegin: (vw: number, vh: number, w: number | string | undefined, h: number | string | undefined, withoutSymDefs?: boolean, plotOption?: PlotOption) => string;
 declare const shiftDataCG: (data: Checker[], visibleCol: number) => [Checker[], number];
 declare const plotCGBeadRoad: (data: Checker[], visibleCol: number, visibleRow: number, w: number | string, h: number | string, locX: number | undefined, locY: number | undefined, emptyEndCols?: number, rowSpacing?: number, isAnimated?: boolean, isShowSuperGameResult?: boolean, plotOption?: PlotOption) => string;
+declare const plotCGv2Begin: (vw: number, vh: number, w: number | string | undefined, h: number | string | undefined, withoutSymDefs?: boolean, plotOption?: PlotOption) => string;
+declare const plotCGv2eadRoad: (data: Checker[], visibleCol: number, visibleRow: number, w: number, h: number, locX: number | undefined, locY: number | undefined, emptyEndCols?: number, rowSpacing?: number, isAnimated?: boolean, isShowSuperGameResult?: boolean, plotOption?: PlotOption) => string;
 declare const plotDBBegin: (vw: number, vh: number, w: number | string | undefined, h: number | string | undefined, withoutSymDefs?: boolean, plotOption?: PlotOption) => string;
 declare const plotDBBeadRoad: (data: Checker[], visibleCol: number, visibleRow: number, w: number | string, h: number | string, locX: number | undefined, locY: number | undefined, emptyEndCols?: number, rowSpacing?: number, isAnimated?: boolean, plotOption?: PlotOption) => string;
+declare const plotDBBegin_V2: (vw: number, vh: number, w: number | string | undefined, h: number | string | undefined, withoutSymDefs?: boolean, plotOption?: PlotOption) => string;
+declare const plotDBBeadRoad_V2: (data: Checker[], visibleCol: number, visibleRow: number, w: number | string, h: number | string, locX: number | undefined, locY: number | undefined, emptyEndCols?: number, rowSpacing?: number, isAnimated?: boolean, plotOption?: PlotOption) => string;
 
 declare const cellDim = 50;
 declare const buildSymbolBeadAll: (baBeadDotStrokeColor?: string) => string;
@@ -543,6 +554,14 @@ declare const buildGridROLBeadPattern: (borderColor?: string) => string;
 declare const buildSymbolDIBigAll: () => string;
 declare const buildSymbolDIBig: (w: number) => string;
 declare const buildSymbolDIOddEven: (w: number) => string;
+declare const buildSymbolDIDice: (w: number) => string;
+declare const buildGroupDIDice: (w: number) => string;
+declare const buildDIHistoryNum: (w: number, mode: 'oddEven' | 'bigSmall', isTriple?: boolean) => string;
+declare const buildDIHistoryBig: (lang: 'zh' | 'en' | 'cn') => string;
+declare const buildDIHistoryTriple: (lang: 'zh' | 'en' | 'cn') => string;
+declare const buildDIHistorySmall: (lang: 'zh' | 'en' | 'cn') => string;
+declare const buildDIHistoryOdd: (lang: 'zh' | 'en' | 'cn') => string;
+declare const buildDIHistoryEven: (lang: 'zh' | 'en' | 'cn') => string;
 declare const buildGroupDIBig: (w: number) => string;
 declare const buildGroupDIBigEn: (w: number) => string;
 declare const buildGroupDIBigCn: (w: number) => string;
@@ -551,6 +570,7 @@ declare const buildGroupDIOddEvenEn: (w: number) => string;
 declare const buildGroupDIOddEvenCn: (w: number) => string;
 declare const parseSymbolDIBig: (w: number, lang?: Lang) => string;
 declare const parseSymbolDIOddEven: (w: number, lang?: Lang) => string;
+declare const parseSymbolDIDice: (w: number, lang?: Lang) => string;
 declare const buildGroupDIBeadNum: (w: number, mode: 'light' | 'dark') => string;
 declare const buildDefsLWColors: () => string;
 declare const buildGroupLWBead: (w: number, last: boolean | undefined, mode: string) => string;
@@ -601,9 +621,13 @@ declare const buildSymbolBigZJH: (w: number) => string;
 declare const buildGroupBigZJH: (w: number) => string;
 declare const buildDefsCGColors: () => string;
 declare const buildGroupCGBead: (w: number) => string;
+declare const CG_COLORS_V2: string[];
 declare const parseSymbolDB: (w: string) => string;
 declare const buildSymbolDBAll: () => string;
 declare const buildGroupDBBead: (winner: string) => string;
+declare const parseSymbolDB_V2: (w: string) => string;
+declare const buildSymbolDBAll_V2: () => string;
+declare const buildGroupDBBead_V2: (winner: string) => string;
 
 declare const cardEmpty: (card: number) => boolean;
 declare const cardPoint$4: (card: number) => number;
@@ -920,7 +944,7 @@ declare const calcGameResult$1: (roundCard: string) => {
 };
 declare const isTriple: (d1: number, d2: number, d3: number) => boolean;
 declare const calcWinResult$1: (roundCard: string) => string;
-declare const calcWinBetCodes$1: (roundCard: string, roundNum: number) => string[];
+declare const calcWinBetCodes$1: (roundCard: string) => string[];
 declare const calcRoundMiss$1: (accumCards: string[], roundNum: number) => {
     [x: string]: number;
 };
@@ -959,8 +983,43 @@ declare namespace index$2 {
   export { index$2_DB_CARDS as DB_CARDS, index$2_DB_EMPTY_CARD as DB_EMPTY_CARD, index$2_calcGameResult as calcGameResult, index$2_calcRoundMiss as calcRoundMiss, index$2_calcWinBetCodes as calcWinBetCodes, index$2_calcWinResult as calcWinResult, index$2_decomposeCardResult as decomposeCardResult, index$2_randGameResult as randGameResult };
 }
 
+declare const _default: {
+    calcGameResult: (roundCard: string, isHit: boolean) => {
+        w: number;
+        b: number;
+        p: number;
+        x: number;
+        y: number;
+        bv: number;
+        pv: number;
+    };
+    calcWinResult: (roundCard: string, isHit: boolean) => string;
+    calcWinBetCodes: (roundCard: string) => string[];
+    calcRoundMiss: (accumCards: string[], roundNum: number) => {
+        [x: string]: number;
+    };
+    randGameResult: () => string;
+    cardEmpty: (card: number) => boolean;
+    cardPoint: (card: number) => number;
+    cardValue: (card: number) => number;
+    cardSuit: (card: number) => number;
+    sumOfTwoCardValues: (c1: number, c2: number) => number;
+    sumOfThreeCardValues: (c1: number, c2: number, c3: number) => number;
+    pairOfTwoCardPoints: (c1: number, c2: number) => number;
+    pairOfThreeCardPoints: (c1: number, c2: number, c3: number) => number;
+    decomposeCardResult: (roundCard: string) => number[];
+    decomposeRoundLuckyResult: (roundLucky: string) => {
+        [x: string]: number;
+    };
+    decomposeRoundCardLuckyResult: (roundCard: string) => {
+        [x: string]: number;
+    };
+    randGameLuckyResult: () => string;
+    randGameResultWithLucky: () => string;
+};
+
 declare namespace index$1 {
-  export { index$b as ba, index$3 as cg, index$2 as db, index$9 as di, index$a as dt, index$5 as fan, index$7 as lw, index$6 as ox, index$8 as ro, index$4 as zjh };
+  export { index$b as ba, index$3 as cg, index$2 as db, index$9 as di, index$a as dt, index$5 as fan, index$7 as lw, _default as oln, index$6 as ox, index$8 as ro, index$4 as zjh };
 }
 
 declare function genWidgetToken(operCode: string, appKey: string): string;
@@ -970,4 +1029,4 @@ declare namespace index {
   export { index_genWidgetToken as genWidgetToken };
 }
 
-export { type BAStats, type CGStats, type CalcRoadmapOptions, type Checker, CheckerGrid, ColumnInfo, ColumnList, type DBStats, DICheckerGrid, type DIStats, type DTStats, type DataEntry, DefaultMaxCalcCol, DefaultMaxCol, DefaultMaxRow, DefaultTurnMode, type FANStats, type LWStats, type Lang, type OXCheckerSize, type OXResult, type OXStats, OX_CHECKER_SIZE_MAP, type PlotOption, type ROStats, type Roadmap, TurnModeLeftAndRight, TurnModeProhibitLeft, TurnModeSimpleRight, type ZJHStats, analyze234Road, analyzeBeadRoad, analyzeBigRoad, analyzeCGBeadRoad, analyzeDBBeadRoad, analyzeDIBeadRoad, analyzeDIBigRoad, analyzeFANBigRoad, analyzeGreatRoad, analyzeLWBeadRoad, analyzeOXBigRoad, analyzeROBeadRoad, analyzeROBigRoad, analyzeResult, analyzeZJHBigRoad, bigRoadFillColumns, buildCheckers, buildDefsCGColors, buildDefsGrids, buildDefsLWColors, buildDefsROLGrids, buildDefsZJHGradients, buildGrid50Pattern, buildGridROLBeadPattern, buildGroupBead, buildGroupBeadDT_en, buildGroupBeadNum, buildGroupBeadZJH, buildGroupBeadZJHText, buildGroupBead_cn, buildGroupBead_zh, buildGroupBig, buildGroupBigNum, buildGroupBigZJH, buildGroupCGBead, buildGroupDBBead, buildGroupDIBeadNum, buildGroupDIBig, buildGroupDIBigCn, buildGroupDIBigEn, buildGroupDIOddEven, buildGroupDIOddEvenCn, buildGroupDIOddEvenEn, buildGroupFAN, buildGroupFANCn, buildGroupFANEn, buildGroupLWBead, buildGroupOXBead, buildGroupOXBeadLabel, buildGroupR234, buildGroupROBigSmall, buildGroupROBigSmallCn, buildGroupROBigSmallEn, buildGroupROOddEven, buildGroupROOddEvenCn, buildGroupROOddEvenEn, buildGroupRORedBlack, buildGroupRORedBlackCn, buildGroupRORedBlackEn, buildGroupROZero, buildSymboLWAll, buildSymbolBead, buildSymbolBeadAll, buildSymbolBeadAllDT, buildSymbolBeadAllZJH, buildSymbolBeadDT, buildSymbolBeadNum, buildSymbolBeadNumAll, buildSymbolBeadZJH, buildSymbolBig, buildSymbolBigAll, buildSymbolBigZJH, buildSymbolBigZJHAll, buildSymbolDBAll, buildSymbolDIBig, buildSymbolDIBigAll, buildSymbolDIOddEven, buildSymbolFAN, buildSymbolFANAll, buildSymbolFANNum, buildSymbolOX, buildSymbolOXBigAll, buildSymbolR234, buildSymbolR234All, buildSymbolROAll, buildSymbolROBigSmall, buildSymbolRODozenRow, buildSymbolROOddEven, buildSymbolRORedBlack, calcBARoadmap, calcBAStats, calcCGRoadmap, calcCGStats, calcDBRoadmap, calcDBStats, calcDIRoadmap, calcDIStats, calcDIStatsProbabilities, calcDTRoadmap, calcDTStats, calcFANRoadmap, calcFANStats, calcGreatRoad, calcLWRoadmap, calcLWStats, calcOXRoadmap, calcOXStats, calcRORoadmap, calcROStats, calcRoadmap, calcStats, calcZJHRoadmap, calcZJHStats, cellDim, createBAEntry, createCGDataEntry, createDBDataEntry, createDIDataEntry, createDTEntry, createDataEntry, createFANDataEntry, createLWDataEntry, createOXDataEntry, createRODataEntry, createZJHDataEntry, emptyBACard, emptyCGCard, emptyDBCard, emptyDICard, emptyDTCard, emptyFANCard, emptyLWCard, emptyOXCard, emptyROCard, emptyZJHCard, index$1 as gameRules, grtLongBanker, grtLongBankerLongPlayer, grtLongCockroach, grtLongPlayer, grtLongToSingleJump, grtOneHallTwoRoomBanker, grtOneHallTwoRoomPlayer, grtOneThreeTwoFourBigEye, grtSeparateFromBanker, grtSeparateFromPlayer, grtSingleJump, grtStickBottomBanker, grtStickBottomPlayer, grtStickOnBanker, grtStickOnPlayer, parseSymbolBead, parseSymbolBeadDT, parseSymbolBeadNum, parseSymbolBeadZJH, parseSymbolBig, parseSymbolBigZJH, parseSymbolDB, parseSymbolDIBig, parseSymbolDIOddEven, parseSymbolFAN, parseSymbolFANNum, parseSymbolLW, parseSymbolR234, parseSymbolROBeadNum, parseSymbolROBigSmall, parseSymbolRODozenRow, parseSymbolROLBeadNum, parseSymbolROOddEven, parseSymbolRORedBlack, plotBeadRoad, plotBegin, plotBigRoad, plotCGBeadRoad, plotCGBegin, plotDBBeadRoad, plotDBBegin, plotDIBeadRoad, plotDIBegin, plotDIBigRoad, plotDIOddEvenRoad, plotEmptyDots, plotEnd, plotFANBegin, plotFANBigRoad, plotFcHorm, plotGrid, plotLWBeadRoad, plotLWBegin, plotOXBeadRoad, plotOXBegin, plotOXBigBegin, plotR234Road, plotROBeadRoad, plotROBegin, plotROBigRoad, plotRODozenColRoad, plotROLBeadRoad, plotStandardFull, plotSymDefs, plotWaterfallFull, plotZJHBigRoad, shiftData, shiftDataCG, shiftDataLW, index as widgets, winResultBanker, winResultPlayer, winResultTie };
+export { type BAStats, type CGStats, CG_COLORS_V2, type CalcRoadmapOptions, type Checker, CheckerGrid, ColumnInfo, ColumnList, type DBStats, DICheckerGrid, type DIStats, type DTStats, type DataEntry, DefaultMaxCalcCol, DefaultMaxCol, DefaultMaxRow, DefaultTurnMode, type FANStats, type LWStats, type Lang, type OXCheckerSize, type OXResult, type OXStats, OX_CHECKER_SIZE_MAP, type PlotOption, type ROStats, type Roadmap, TurnModeLeftAndRight, TurnModeProhibitLeft, TurnModeSimpleRight, type ZJHStats, analyze234Road, analyzeBeadRoad, analyzeBigRoad, analyzeCGBeadRoad, analyzeDBBeadRoad, analyzeDIBeadRoad, analyzeDIBigRoad, analyzeFANBigRoad, analyzeGreatRoad, analyzeLWBeadRoad, analyzeOXBigRoad, analyzeROBeadRoad, analyzeROBigRoad, analyzeResult, analyzeZJHBigRoad, bigRoadFillColumns, buildCheckers, buildDIHistoryBig, buildDIHistoryEven, buildDIHistoryNum, buildDIHistoryOdd, buildDIHistorySmall, buildDIHistoryTriple, buildDefsCGColors, buildDefsGrids, buildDefsLWColors, buildDefsROLGrids, buildDefsZJHGradients, buildGrid50Pattern, buildGridROLBeadPattern, buildGroupBead, buildGroupBeadDT_en, buildGroupBeadNum, buildGroupBeadZJH, buildGroupBeadZJHText, buildGroupBead_cn, buildGroupBead_zh, buildGroupBig, buildGroupBigNum, buildGroupBigZJH, buildGroupCGBead, buildGroupDBBead, buildGroupDBBead_V2, buildGroupDIBeadNum, buildGroupDIBig, buildGroupDIBigCn, buildGroupDIBigEn, buildGroupDIDice, buildGroupDIOddEven, buildGroupDIOddEvenCn, buildGroupDIOddEvenEn, buildGroupFAN, buildGroupFANCn, buildGroupFANEn, buildGroupLWBead, buildGroupOXBead, buildGroupOXBeadLabel, buildGroupR234, buildGroupROBigSmall, buildGroupROBigSmallCn, buildGroupROBigSmallEn, buildGroupROOddEven, buildGroupROOddEvenCn, buildGroupROOddEvenEn, buildGroupRORedBlack, buildGroupRORedBlackCn, buildGroupRORedBlackEn, buildGroupROZero, buildSymboLWAll, buildSymbolBead, buildSymbolBeadAll, buildSymbolBeadAllDT, buildSymbolBeadAllZJH, buildSymbolBeadDT, buildSymbolBeadNum, buildSymbolBeadNumAll, buildSymbolBeadZJH, buildSymbolBig, buildSymbolBigAll, buildSymbolBigZJH, buildSymbolBigZJHAll, buildSymbolDBAll, buildSymbolDBAll_V2, buildSymbolDIBig, buildSymbolDIBigAll, buildSymbolDIDice, buildSymbolDIOddEven, buildSymbolFAN, buildSymbolFANAll, buildSymbolFANNum, buildSymbolOX, buildSymbolOXBigAll, buildSymbolR234, buildSymbolR234All, buildSymbolROAll, buildSymbolROBigSmall, buildSymbolRODozenRow, buildSymbolROOddEven, buildSymbolRORedBlack, calcBARoadmap, calcBAStats, calcCGRoadmap, calcCGStats, calcDBRoadmap, calcDBStats, calcDIRoadmap, calcDIStats, calcDIStatsProbabilities, calcDTRoadmap, calcDTStats, calcFANRoadmap, calcFANStats, calcGreatRoad, calcLWRoadmap, calcLWStats, calcOXRoadmap, calcOXStats, calcRORoadmap, calcROStats, calcRoadmap, calcStats, calcZJHRoadmap, calcZJHStats, cellDim, createBAEntry, createCGDataEntry, createDBDataEntry, createDIDataEntry, createDTEntry, createDataEntry, createFANDataEntry, createLWDataEntry, createOXDataEntry, createRODataEntry, createZJHDataEntry, emptyBACard, emptyCGCard, emptyDBCard, emptyDICard, emptyDTCard, emptyFANCard, emptyLWCard, emptyOXCard, emptyROCard, emptyZJHCard, index$1 as gameRules, grtLongBanker, grtLongBankerLongPlayer, grtLongCockroach, grtLongPlayer, grtLongToSingleJump, grtOneHallTwoRoomBanker, grtOneHallTwoRoomPlayer, grtOneThreeTwoFourBigEye, grtSeparateFromBanker, grtSeparateFromPlayer, grtSingleJump, grtStickBottomBanker, grtStickBottomPlayer, grtStickOnBanker, grtStickOnPlayer, parseSymbolBead, parseSymbolBeadDT, parseSymbolBeadNum, parseSymbolBeadZJH, parseSymbolBig, parseSymbolBigZJH, parseSymbolDB, parseSymbolDB_V2, parseSymbolDIBig, parseSymbolDIDice, parseSymbolDIOddEven, parseSymbolFAN, parseSymbolFANNum, parseSymbolLW, parseSymbolR234, parseSymbolROBeadNum, parseSymbolROBigSmall, parseSymbolRODozenRow, parseSymbolROLBeadNum, parseSymbolROOddEven, parseSymbolRORedBlack, plotBeadRoad, plotBegin, plotBigRoad, plotCGBeadRoad, plotCGBegin, plotCGv2Begin, plotCGv2eadRoad, plotDBBeadRoad, plotDBBeadRoad_V2, plotDBBegin, plotDBBegin_V2, plotDIBeadRoad, plotDIBegin, plotDIBigRoad, plotDIHistoryRoad, plotDIOddEvenRoad, plotEmptyDots, plotEnd, plotFANBegin, plotFANBigRoad, plotFcHorm, plotGrid, plotLWBeadRoad, plotLWBegin, plotOXBeadRoad, plotOXBegin, plotOXBigBegin, plotR234Road, plotROBeadRoad, plotROBegin, plotROBigRoad, plotRODozenColRoad, plotROLBeadRoad, plotStandardFull, plotSymDefs, plotWaterfallFull, plotZJHBigRoad, shiftData, shiftDataCG, shiftDataLW, sliceDataRO, index as widgets, winResultBanker, winResultPlayer, winResultTie };

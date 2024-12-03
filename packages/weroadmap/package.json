@@ -1,23 +1,23 @@
 {
-    "name": "@wecasino/weroadmap",
-    "version": "0.6.0",
-    "type": "module",
-    "exports": {
-      ".": {
-        "types": "./lib/index.d.ts",
-        "import": "./lib/index.js",
-        "require": "./lib/index.cjs"
-      }
-    },
-    "files": [
-      "lib"
-    ],
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/wecasino/wecasino-widget.git"
-    },
-    "license": "MIT",
-    "publishConfig": {
-      "registry": "https://npm.pkg.github.com"
+  "name": "@wecasino/weroadmap",
+  "version": "0.8.2",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "require": "./lib/index.cjs"
     }
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wecasino/wecasino-widget.git"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
 }

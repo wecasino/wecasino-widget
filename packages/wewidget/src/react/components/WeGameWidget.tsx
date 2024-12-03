@@ -2,7 +2,13 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { type Lang } from "@wecasino/weroadmap";
 import useWeGameWidget from "../hooks/useWeGameWidget";
 import useLocales from "../hooks/useLocales";
-import { drawBead, drawBigFull, MaintenanceIcon } from "../../core";
+import {
+  drawBead,
+  drawBigFull,
+  drawCG,
+  drawCGV2,
+  MaintenanceIcon,
+} from "../../core";
 
 const CoverImage = ({ imgUrl }: { imgUrl: string }) => (
   <div
@@ -147,6 +153,7 @@ const WeGameWidget = ({
   titleColor = "white",
   roadmapMode = "light",
   roadmapBackgroundColor,
+  roadmapVersion = "V1",
 }: {
   gameCode: string;
   title?: string;
@@ -156,11 +163,18 @@ const WeGameWidget = ({
   borderRadius?: string;
   roadmapMode?: "dark" | "light";
   roadmapBackgroundColor?: string;
+  roadmapVersion?: string;
 }) => {
-  const { title, coverImageUrl, gameStateFlag, accumCards, isMaintenance } =
-    useWeGameWidget({
-      gameCode,
-    });
+  const {
+    gameType,
+    title,
+    coverImageUrl,
+    gameStateFlag,
+    accumCards,
+    isMaintenance,
+  } = useWeGameWidget({
+    gameCode,
+  });
   const { language } = useLocales();
   const roadmapContainerRef = useRef<HTMLDivElement | null>(null);
   // default value 321 for default width
@@ -196,7 +210,7 @@ const WeGameWidget = ({
       cols,
       gameType: "BA",
       data: accumCards,
-      mode: "standard" || "",
+      mode: "standard",
       backgroundMode: roadmapMode === "dark" ? "dark" : "light",
       plotOption: {
         lang: checkLang(language || "") as Lang,
@@ -223,7 +237,7 @@ const WeGameWidget = ({
       cols,
       gameType: "BA",
       data: accumCards,
-      mode: "standard" || "",
+      mode: "standard",
       backgroundMode: roadmapMode === "dark" ? "dark" : "light",
       // askRoadWinner,
       // plotOption: {
@@ -234,9 +248,24 @@ const WeGameWidget = ({
     return svgContent;
   };
 
+  const getCGRoadmapContent = ({ accumCards }: { accumCards: string[] }) => {
+    const h = 166;
+    const cols = Math.ceil(containerWidth / (h / 3));
+    const drawFn = roadmapVersion === "V2" ? drawCGV2 : drawCG;
+    const svgContent = drawFn({
+      cols,
+      rows: 1,
+      data: accumCards,
+      isAnimated: true,
+      backgroundMode: roadmapMode === "dark" ? "dark" : "light",
+    });
+    return svgContent;
+  };
   const roamdapBg =
     roadmapBackgroundColor ||
     (roadmapMode === "dark" ? "transparent" : "white");
+
+  const isCG = gameType === "CG" || gameType === "CGM";
   return (
     <div
       style={{
@@ -301,12 +330,21 @@ const WeGameWidget = ({
               background: roamdapBg,
             }}
           >
-            <div style={{ width: "53%", height: "100%" }}>
-              <Roadmap content={getBeadRoadmapContent({ accumCards })} />
-            </div>
-            <div style={{ flex: 1, height: "100%" }}>
-              <Roadmap content={getBigFullRoadmapContent({ accumCards })} />
-            </div>
+            {!isCG && (
+              <>
+                <div style={{ width: "53%", height: "100%" }}>
+                  <Roadmap content={getBeadRoadmapContent({ accumCards })} />
+                </div>
+                <div style={{ flex: 1, height: "100%" }}>
+                  <Roadmap content={getBigFullRoadmapContent({ accumCards })} />
+                </div>
+              </>
+            )}
+            {isCG && (
+              <div style={{ flex: 1, height: "100%" }}>
+                <Roadmap content={getCGRoadmapContent({ accumCards })} />
+              </div>
+            )}
           </div>
         )}
         {isMaintenance && <MaintenanceFlag />}
