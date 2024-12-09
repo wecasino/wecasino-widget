@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { type Lang } from "@wecasino/weroadmap";
-import useWeGameWidget from "../hooks/useWeGameWidget";
+import useWeGameWidget, {
+  BetCodeCG,
+  betCodeCGTypes,
+} from "../hooks/useWeGameWidget";
 import useLocales from "../hooks/useLocales";
 import {
   drawBead,
@@ -9,6 +12,15 @@ import {
   drawCGV2,
   MaintenanceIcon,
 } from "../../core";
+
+const betCodeCGBgColor = {
+  [BetCodeCG.PINK]: "#FF6FB7",
+  [BetCodeCG.GREEN]: "#42C961",
+  [BetCodeCG.YELLOW]: "#FBD930",
+  [BetCodeCG.RED]: "#FF3D57",
+  [BetCodeCG.WHITE]: "#FFF9F2",
+  [BetCodeCG.BLUE]: "#668EEB",
+};
 
 const CoverImage = ({ imgUrl }: { imgUrl: string }) => (
   <div
@@ -153,7 +165,7 @@ const WeGameWidget = ({
   titleColor = "white",
   roadmapMode = "light",
   roadmapBackgroundColor,
-  roadmapVersion = "V1",
+  roadmapVersion = "V2",
 }: {
   gameCode: string;
   title?: string;
@@ -172,6 +184,7 @@ const WeGameWidget = ({
     gameStateFlag,
     accumCards,
     isMaintenance,
+    cgStatsPercentage,
   } = useWeGameWidget({
     gameCode,
   });
@@ -301,32 +314,43 @@ const WeGameWidget = ({
           width: "100%",
           height: "auto",
           display: "flex",
+          ...(isCG ? { justifyContent: "space-between" } : {}),
         }}
       >
         <div
-          style={{
-            width: "8.75rem",
-            height: "10.375rem",
-            position: "relative",
-            flexShrink: 0,
-            borderRadius: "0.5rem",
-          }}
+          style={
+            isCG
+              ? {
+                  width: "12.75rem",
+                  height: "6.375rem",
+                  position: "relative",
+                  flexShrink: 0,
+                  borderRadius: "0.5rem",
+                }
+              : {
+                  width: "8.75rem",
+                  height: "10.375rem",
+                  position: "relative",
+                  flexShrink: 0,
+                  borderRadius: "0.5rem",
+                }
+          }
         >
           <CoverImage imgUrl={coverImageUrl} />
           <GameStatusFlag status={gameStateFlag} />
         </div>
-        <div style={{ width: "0.675rem" }} />
+        {!isCG && <div style={{ width: "0.675rem" }} />}
         {!isMaintenance && (
           <div
             ref={roadmapContainerRef}
             style={{
               position: "relative",
               width: "100%",
-              height: "10.375rem",
+              height: isCG ? "6.375rem" : "10.375rem",
               flex: 1,
               display: "flex",
               alignItems: "center",
-              padding: "0 0.25rem",
+              padding: isCG ? "0" : "0 0.25rem",
               background: roamdapBg,
             }}
           >
@@ -350,6 +374,38 @@ const WeGameWidget = ({
         {isMaintenance && <MaintenanceFlag />}
       </div>
       {isMaintenance && <MaintenanceCover />}
+      {isCG && !isMaintenance && (
+        <div
+          style={{
+            marginTop: "0.675rem",
+            display: "flex",
+            justifyContent: "space-between",
+            gap: "0.25rem",
+          }}
+        >
+          {betCodeCGTypes.map((cg, idx) => (
+            <div
+              key={cg}
+              style={{
+                flex: 1,
+                background: betCodeCGBgColor[cg],
+                color: [BetCodeCG.WHITE, BetCodeCG.YELLOW].includes(cg)
+                  ? "#99633D"
+                  : "#FFF9F2",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: "0.25rem",
+                lineHeight: "1.375rem",
+                fontSize: "0.75rem",
+                fontWeight: 700,
+              }}
+            >
+              {`${cgStatsPercentage[idx]}%`}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

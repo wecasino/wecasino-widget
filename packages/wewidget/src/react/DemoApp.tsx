@@ -160,22 +160,31 @@ const App = () => {
         <Labels points={["Game Code: STUDIO-BBA-5"]} />
         <WeGameWidget gameCode="STUDIO-BAA-5" />
       </Item>
-      <Item>
-        <Labels points={["Game Code: STUDIO-CG-CGC001"]} />
-        <WeGameWidget gameCode="STUDIO-CG-CGC001" />
+      <Item style={{ width: "100%" }}>
+        <Labels
+          points={[
+            "Game Code: STUDIO-CG-CGC001",
+            "roadmapBackgroundColor: transparent",
+            "width: 100%",
+            "item container width: 100%",
+          ]}
+        />
+        <WeGameWidget
+          gameCode="STUDIO-CG-CGC001"
+          roadmapBackgroundColor="transparent"
+          width="100%"
+        />
       </Item>
       <Item>
         <Labels
           points={[
             "Game Code: STUDIO-CG-CGC001",
-            "roadmapVersion: V2",
-            "roadmapBackgroundColor: gray",
+            "roadmapBackgroundColor: transparent",
           ]}
         />
         <WeGameWidget
           gameCode="STUDIO-CG-CGC001"
-          roadmapVersion="V2"
-          roadmapBackgroundColor="gray"
+          roadmapBackgroundColor="transparent"
         />
       </Item>
     </div>
