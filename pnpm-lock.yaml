@@ -22,7 +22,7 @@ importers:
         version: 3.2.0
       zustand:
         specifier: ^4.5.2
-        version: 4.5.5(immer@10.1.1)(react@18.3.1)
+        version: 4.5.5(@types/react@18.3.5)(immer@10.1.1)(react@18.3.1)
     devDependencies:
       '@types/node':
         specifier: ^20.14.10
@@ -49,6 +49,40 @@ importers:
         specifier: ^14.1.1
         version: 14.1.1
 
+  examples/react:
+    dependencies:
+      '@wecasino/weroadmap':
+        specifier: workspace:*
+        version: link:../../packages/weroadmap
+    devDependencies:
+      '@types/node':
+        specifier: ^20.14.10
+        version: 20.16.5
+      '@types/react':
+        specifier: ^18.3.5
+        version: 18.3.5
+      '@types/react-dom':
+        specifier: ^18.3.0
+        version: 18.3.0
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+      ts-lit-plugin:
+        specifier: ^2.0.2
+        version: 2.0.2
+      tsup:
+        specifier: ^8.2.4
+        version: 8.2.4(typescript@5.6.2)
+      typescript:
+        specifier: ^5.2.2
+        version: 5.6.2
+      vite:
+        specifier: ^5.2.0
+        version: 5.4.3(@types/node@20.16.5)
+
   packages/weroadmap: {}
 
   packages/wewidget:
@@ -67,7 +101,7 @@ importers:
         version: 3.2.0
       zustand:
         specifier: ^4.5.5
-        version: 4.5.5(immer@10.1.1)(react@18.3.1)
+        version: 4.5.5(@types/react@18.3.5)(immer@10.1.1)(react@18.3.1)
     devDependencies:
       '@types/node':
         specifier: ^20.14.10
@@ -5160,7 +5194,7 @@ packages:
       yargs-parser: 21.1.1
     dev: true
 
-  /zustand@4.5.5(immer@10.1.1)(react@18.3.1):
+  /zustand@4.5.5(@types/react@18.3.5)(immer@10.1.1)(react@18.3.1):
     resolution: {integrity: sha512-+0PALYNJNgK6hldkgDq2vLrw5f6g/jCInz52n9RTpropGgeAf/ioFUCdtsjCqu4gNhW9D01rUQBROoRjdzyn2Q==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
@@ -5175,6 +5209,7 @@ packages:
       react:
         optional: true
     dependencies:
+      '@types/react': 18.3.5
       immer: 10.1.1
       react: 18.3.1
       use-sync-external-store: 1.2.2(react@18.3.1)

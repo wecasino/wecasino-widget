@@ -20,7 +20,9 @@
     "build": "pnpm -r --filter='./packages/wewidget' run build",
     "demo:dev": "pnpm -r --filter='./examples/demo' run dev",
     "site:dev": "pnpm -r --filter='./site' run dev",
-    "site:build": "pnpm -r --filter='./site' run build"
+    "site:build": "pnpm -r --filter='./site' run build",
+    "react-demo:dev": "pnpm -r --filter='./examples/react' run dev",
+    "react-demo:build": "pnpm -r --filter='./examples/react' run build"
   },
   "dependencies": {
     "lit": "^3.1.2",
