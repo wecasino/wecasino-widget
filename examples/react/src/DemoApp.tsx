@@ -80,7 +80,7 @@ const App = () => {
         color: "black",
       }}
     >
-      <h1>React App Demo</h1>
+      <h1>React WeGameWidget Demo</h1>
       <div style={{ margin: 6 }}>
         ENV:
         <select value={env} onChange={handleChange}>
