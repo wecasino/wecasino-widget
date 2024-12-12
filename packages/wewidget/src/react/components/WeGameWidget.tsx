@@ -11,6 +11,8 @@ import {
   drawCG,
   drawCGV2,
   MaintenanceIcon,
+  PlayerCountIcon,
+  ViewCountIcon,
 } from "../../core";
 
 const betCodeCGBgColor = {
@@ -143,6 +145,49 @@ const MaintenanceCover = () => (
   />
 );
 
+const countFormat = (count: number) => {
+  if (`${count}`.length <= 4) {
+    return count;
+  } else if (`${count}`.length > 4 && `${count}`.length <= 6) {
+    const countString = Math.floor(count / 1000);
+    return `${countString}K+`;
+  } else if (`${count}`.length > 6) {
+    const countString = (count / 1000000).toFixed(2);
+    return `${countString}M+`;
+  }
+};
+
+const CountRow = ({
+  playerCount,
+  viewCount,
+}: {
+  playerCount: number;
+  viewCount: number;
+}) => {
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        color: "white",
+        fontSize: "0.75rem",
+        padding: "0 0.125rem",
+      }}
+    >
+      <img
+        style={{ width: "0.75rem", height: "0.75rem" }}
+        src={`data:image/svg+xml;utf8,${encodeURIComponent(PlayerCountIcon)}`}
+      ></img>
+      <div style={{ marginLeft: "0.125rem" }}>{countFormat(playerCount)}</div>
+      <img
+        style={{ width: "0.75rem", height: "0.75rem", marginLeft: "0.75rem" }}
+        src={`data:image/svg+xml;utf8,${encodeURIComponent(ViewCountIcon)}`}
+      ></img>
+      <div style={{ marginLeft: "0.125rem" }}>{countFormat(viewCount)}</div>
+    </div>
+  );
+};
+
 const debounce = (fn: Function, ms = 300) => {
   let timeoutId: ReturnType<typeof setTimeout>;
   return function (this: any, ...args: any[]) {
@@ -206,7 +251,7 @@ const WeGameWidget = ({
 
   useEffect(() => {
     calcRoadmapContainerWidth();
-  }, [roadmapContainerRef.current, width]);
+  }, [roadmapContainerRef.current, width, gameType]);
 
   useEffect(() => {
     window.addEventListener("resize", calcRoadmapContainerWidth);
@@ -262,7 +307,8 @@ const WeGameWidget = ({
   };
 
   const getCGRoadmapContent = ({ accumCards }: { accumCards: string[] }) => {
-    const h = 166;
+    // 102 raw roadmap section height, 20 player view count row height
+    const h = 102 - 20;
     const cols = Math.ceil(containerWidth / (h / 3));
     const drawFn = roadmapVersion === "V2" ? drawCGV2 : drawCG;
     const svgContent = drawFn({
@@ -350,7 +396,8 @@ const WeGameWidget = ({
               flex: 1,
               display: "flex",
               alignItems: "center",
-              padding: isCG ? "0" : "0 0.25rem",
+              // padding: isCG ? "0" : "0 0.25rem",
+              padding: "0 0.25rem",
               background: roamdapBg,
             }}
           >
@@ -366,7 +413,18 @@ const WeGameWidget = ({
             )}
             {isCG && (
               <div style={{ flex: 1, height: "100%" }}>
-                <Roadmap content={getCGRoadmapContent({ accumCards })} />
+                <div style={{ width: "100%", height: "5.125rem" }}>
+                  <Roadmap content={getCGRoadmapContent({ accumCards })} />
+                </div>
+                <div
+                  style={{
+                    width: "100%",
+                    height: "1rem",
+                    marginTop: "0.25rem",
+                  }}
+                >
+                  <CountRow viewCount={1299999} playerCount={19999} />
+                </div>
               </div>
             )}
           </div>
