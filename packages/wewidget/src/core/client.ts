@@ -21,7 +21,7 @@ const sndUrl = "wss://uat-weg-gdsapi.wehosts247.com/widgetws";
 const prdUrl = "wss://nc-game.worldonlinegame.com/widgetws";
 
 class WeClient {
-  private _cfg: WeClientConfig;
+  private _cfg: WeClientConfig = { appKey: "", operCode: "" };
   private _ws?: WebSocket;
   private _rcIntv?: any;
 
