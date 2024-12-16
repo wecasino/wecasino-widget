@@ -160,9 +160,11 @@ const countFormat = (count: number) => {
 const CountRow = ({
   playerCount,
   viewCount,
+  style,
 }: {
   playerCount: number;
   viewCount: number;
+  style?: React.CSSProperties;
 }) => {
   return (
     <div
@@ -172,18 +174,23 @@ const CountRow = ({
         color: "white",
         fontSize: "0.75rem",
         padding: "0 0.125rem",
+        ...style,
       }}
     >
       <img
         style={{ width: "0.75rem", height: "0.75rem" }}
         src={`data:image/svg+xml;utf8,${encodeURIComponent(PlayerCountIcon)}`}
       ></img>
-      <div style={{ marginLeft: "0.125rem" }}>{countFormat(playerCount)}</div>
+      <div style={{ marginLeft: "0.125rem", color: "#98a2b3" }}>
+        {countFormat(playerCount)}
+      </div>
       <img
         style={{ width: "0.75rem", height: "0.75rem", marginLeft: "0.75rem" }}
         src={`data:image/svg+xml;utf8,${encodeURIComponent(ViewCountIcon)}`}
       ></img>
-      <div style={{ marginLeft: "0.125rem" }}>{countFormat(viewCount)}</div>
+      <div style={{ marginLeft: "0.125rem", color: "#98a2b3" }}>
+        {countFormat(viewCount)}
+      </div>
     </div>
   );
 };
@@ -230,6 +237,8 @@ const WeGameWidget = ({
     accumCards,
     isMaintenance,
     cgStatsPercentage,
+    playerCnt,
+    viewCnt,
   } = useWeGameWidget({
     gameCode,
   });
@@ -364,26 +373,53 @@ const WeGameWidget = ({
         }}
       >
         <div
-          style={
-            isCG
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            ...(isCG
               ? {
                   width: "12.75rem",
                   height: "6.375rem",
-                  position: "relative",
                   flexShrink: 0,
                   borderRadius: "0.5rem",
                 }
               : {
                   width: "8.75rem",
-                  height: "10.375rem",
-                  position: "relative",
+                  height: "9.125rem",
                   flexShrink: 0,
                   borderRadius: "0.5rem",
-                }
-          }
+                }),
+          }}
         >
-          <CoverImage imgUrl={coverImageUrl} />
-          <GameStatusFlag status={gameStateFlag} />
+          <div
+            style={
+              isCG
+                ? {
+                    width: "12.75rem",
+                    height: "6.375rem",
+                    position: "relative",
+                    flexShrink: 0,
+                    borderRadius: "0.5rem",
+                  }
+                : {
+                    width: "8.75rem",
+                    height: "9.125rem",
+                    position: "relative",
+                    flexShrink: 0,
+                    borderRadius: "0.5rem",
+                  }
+            }
+          >
+            <CoverImage imgUrl={coverImageUrl} />
+            <GameStatusFlag status={gameStateFlag} />
+          </div>
+          {!isCG && !isMaintenance && (
+            <CountRow
+              style={{ marginTop: "0.25rem" }}
+              viewCount={viewCnt}
+              playerCount={playerCnt}
+            />
+          )}
         </div>
         {!isCG && <div style={{ width: "0.675rem" }} />}
         {!isMaintenance && (
@@ -423,7 +459,7 @@ const WeGameWidget = ({
                     marginTop: "0.25rem",
                   }}
                 >
-                  <CountRow viewCount={1299999} playerCount={19999} />
+                  <CountRow viewCount={viewCnt} playerCount={playerCnt} />
                 </div>
               </div>
             )}
