@@ -51,7 +51,7 @@ const Labels = ({
 const App = () => {
   const [env, setEnv] = useState("snd");
   const [lang, setLang] = useState("en");
-  const { connectClient, setLanguage } = useWeClient();
+  const { connectClient, setLanguage, closeClient } = useWeClient();
   const handleChange = (e: any) => {
     const value = e?.target?.value;
     setEnv(value);
@@ -63,6 +63,7 @@ const App = () => {
     setLanguage(value);
   };
   const handleSubmit = () => {
+    closeClient();
     const operCode = env === "snd" ? "weguest_ag3nP0D" : "weguest_agqJgF5";
     connectClient({
       operCode,

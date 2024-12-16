@@ -54,7 +54,7 @@ class WeClient {
   }
 
   public close() {
-    this._close;
+    this._close();
   }
 
   // private methods

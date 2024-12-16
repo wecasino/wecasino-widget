@@ -31,5 +31,9 @@ export default () => {
     weClientInstance.setLanguage(lang);
   };
 
-  return { connectClient, setLanguage };
+  const closeClient = () => {
+    weClientInstance.close();
+  };
+
+  return { connectClient, setLanguage, closeClient };
 };
