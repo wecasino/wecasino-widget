@@ -5,26 +5,21 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "@wecasino/weroadmap": "workspace:*"
-  },
   "scripts": {
     "dev": "vite --port 3100",
-    "build": "vite build"
+    "build": "tsc && vite build"
   },
-  "peerDependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+  "dependencies": {
+    "@wecasino/wewidget": "workspace:*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.14.10",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.2",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "ts-lit-plugin": "^2.0.2",
-    "tsup": "^8.2.4",
     "typescript": "^5.7.2",
+    "@vitejs/plugin-react": "^4.3.4",
     "vite": "^5.2.0"
   }
 }
