@@ -1,6 +1,6 @@
 {
   "name": "@wecasino/wewidget",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "type": "module",
   "exports": {
     ".": {
@@ -36,19 +36,19 @@
   "peerDependencies": {
     "immer": "^10.1.1",
     "lit": "^3.1.2",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "zustand": "^4.5.5"
+    "react": "^18.3.1 || ^19.0.0",
+    "react-dom": "^18.3.1 || ^19.0.0",
+    "zustand": "^5.0.2"
   },
   "devDependencies": {
     "@types/node": "^20.14.10",
-    "@types/react": "^18.3.5",
-    "@types/react-dom": "^18.3.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "@types/react": "^19.0.1",
+    "@types/react-dom": "^19.0.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "ts-lit-plugin": "^2.0.2",
     "tsup": "^8.2.4",
-    "typescript": "^5.2.2",
+    "typescript": "^5.7.2",
     "vite": "^5.2.0"
   }
 }
