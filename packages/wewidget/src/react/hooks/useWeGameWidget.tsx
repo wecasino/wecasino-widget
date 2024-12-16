@@ -98,10 +98,24 @@ const useGame = (gameCode: string) =>
     return game;
   });
 
+const usePlayerCnt = (gameCode: string) =>
+  useStore(weClientInstance.gameStore, (s) => {
+    const playerCnt = s.gamePlayerCnt?.[gameCode] || 0;
+    return playerCnt;
+  });
+
+const useViewCnt = (gameCode: string) =>
+  useStore(weClientInstance.gameStore, (s) => {
+    const viewCnt = s.gameViewCnt?.[gameCode] || 0;
+    return viewCnt;
+  });
+
 const useConfigStore = () => useStore(weClientInstance.configStore, (s) => s);
 
 export default ({ gameCode }: { gameCode: string }) => {
   const game = useGame(gameCode);
+  const playerCnt = usePlayerCnt(gameCode);
+  const viewCnt = useViewCnt(gameCode);
   const config = useConfigStore();
   const { language } = config;
   const title =
@@ -170,5 +184,7 @@ export default ({ gameCode }: { gameCode: string }) => {
     coverImageUrl,
     gameStateFlag,
     cgStatsPercentage,
+    playerCnt,
+    viewCnt,
   };
 };

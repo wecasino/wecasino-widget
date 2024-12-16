@@ -7,10 +7,14 @@ import { Game, GameInfoResult, GameRoundResult, Games } from "./types";
 export interface IGameStore {
   games: Games;
   gameCodes: string[];
+  gamePlayerCnt?: { [key: string]: number };
+  gameViewCnt?: { [key: string]: number };
   updateGameCode: (gameCode: string) => void;
   updateGames: (games: Game[]) => void;
   updateGameInfos: (gameInfos: GameInfoResult[]) => void;
   updateGameRounds: (gameRounds: GameRoundResult[]) => void;
+  updatePlayerCnt: (playerCnt: { [key: string]: number }) => void;
+  updateViewCnt: (viewCnt: { [key: string]: number }) => void;
 }
 
 const getStoreDefaultState = () => ({
@@ -66,6 +70,20 @@ const createGameStore = () =>
             return { ...p, [gameCode]: nextGame };
           }, s.games);
           draft.games = { ...draft.games, ...updatedGames };
+        })
+      );
+    },
+    updatePlayerCnt: (playerCnt: { [key: string]: number }) => {
+      set((s) =>
+        produce(s, (draft) => {
+          draft.gamePlayerCnt = { ...draft.gamePlayerCnt, ...playerCnt };
+        })
+      );
+    },
+    updateViewCnt: (viewCnt: { [key: string]: number }) => {
+      set((s) =>
+        produce(s, (draft) => {
+          draft.gameViewCnt = { ...draft.gameViewCnt, ...viewCnt };
         })
       );
     },

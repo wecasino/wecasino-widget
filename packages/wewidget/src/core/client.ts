@@ -110,6 +110,14 @@ class WeClient {
       const gameRounds = data.gameRounds as GameRoundResult[];
       this._gameStore.getState().updateGameRounds(gameRounds);
     }
+    if (data.gamePlayerCnt) {
+      const playerCnt = data.gamePlayerCnt as { [key: string]: number };
+      this._gameStore.getState().updatePlayerCnt(playerCnt);
+    }
+    if (data.gameViewCnt) {
+      const viewCnt = data.gameViewCnt as { [key: string]: number };
+      this._gameStore.getState().updateViewCnt(viewCnt);
+    }
   }
 }
 
