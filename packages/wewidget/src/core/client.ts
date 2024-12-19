@@ -17,7 +17,7 @@ export type WeClientConfig = {
   onError?: (e: Event) => void;
 };
 
-const sndUrl = "wss://uat-weg-gdsapi.wehosts247.com/widgetws";
+const sndUrl = "wss://uat-weg-wgsapi.wehosts247.com/widgetws";
 const prdUrl = "wss://nc-game.worldonlinegame.com/widgetws";
 
 class WeClient {
@@ -62,7 +62,7 @@ class WeClient {
   private _close() {
     this._ws?.close();
     this._ws = undefined;
-    this._rcIntv && clearInterval(this._rcIntv);
+    this._rcIntv && clearTimeout(this._rcIntv);
     this._rcIntv = undefined;
   }
 
@@ -80,7 +80,7 @@ class WeClient {
 
     ws.onopen = () => {
       self._cfg.onOpen?.();
-      this._rcIntv && clearInterval(this._rcIntv);
+      this._rcIntv && clearTimeout(this._rcIntv);
       this._rcIntv = undefined;
     };
     ws.onmessage = (e) => {
@@ -92,7 +92,7 @@ class WeClient {
     ws.onclose = (e) => {
       self._cfg.onClose?.(e);
       if (self._cfg.reconnectDelay) {
-        self._rcIntv = setInterval(() => {
+        self._rcIntv = setTimeout(() => {
           self._close();
           self._connect();
         }, self._cfg.reconnectDelay);
@@ -101,23 +101,25 @@ class WeClient {
   }
 
   private _handleData(dataString: string) {
-    const data = JSON.parse(dataString);
-    if (data.gameInfos) {
-      const gameInfos = data.gameInfos as GameInfoResult[];
-      this._gameStore.getState().updateGameInfos(gameInfos);
-    }
-    if (data.gameRounds) {
-      const gameRounds = data.gameRounds as GameRoundResult[];
-      this._gameStore.getState().updateGameRounds(gameRounds);
-    }
-    if (data.gamePlayerCnt) {
-      const playerCnt = data.gamePlayerCnt as { [key: string]: number };
-      this._gameStore.getState().updatePlayerCnt(playerCnt);
-    }
-    if (data.gameViewCnt) {
-      const viewCnt = data.gameViewCnt as { [key: string]: number };
-      this._gameStore.getState().updateViewCnt(viewCnt);
-    }
+    try {
+      const data = JSON.parse(dataString);
+      if (data.gameInfos) {
+        const gameInfos = data.gameInfos as GameInfoResult[];
+        this._gameStore.getState().updateGameInfos(gameInfos);
+      }
+      if (data.gameRounds) {
+        const gameRounds = data.gameRounds as GameRoundResult[];
+        this._gameStore.getState().updateGameRounds(gameRounds);
+      }
+      if (data.gamePlayerCnt) {
+        const playerCnt = data.gamePlayerCnt as { [key: string]: number };
+        this._gameStore.getState().updatePlayerCnt(playerCnt);
+      }
+      if (data.gameViewCnt) {
+        const viewCnt = data.gameViewCnt as { [key: string]: number };
+        this._gameStore.getState().updateViewCnt(viewCnt);
+      }
+    } catch (e) {}
   }
 }
 

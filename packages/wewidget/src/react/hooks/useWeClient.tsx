@@ -6,11 +6,13 @@ export default () => {
     language,
     appKey,
     sandbox,
+    reconnectDelay,
   }: {
     operCode: string;
     appKey: string;
     language?: string;
     sandbox: boolean;
+    reconnectDelay?: number;
   }) => {
     weClientInstance.setLanguage(language || "en");
     weClientInstance.connect({
@@ -19,6 +21,7 @@ export default () => {
       // ask we to provide
       appKey,
       sandbox,
+      reconnectDelay,
       // for custom data url
       // dataUrl: "ws://localhost:16000/widgetws",
       onOpen: () => console.info("socket open"),

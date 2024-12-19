@@ -70,6 +70,7 @@ const App = () => {
       language: lang,
       appKey: "v1_81qFsUWYEfMgJaYtwjVDTbyFyXE5J4NpaTZDdDaq1HsL",
       sandbox: env === "snd",
+      reconnectDelay: 10000,
     });
   };
   return (
