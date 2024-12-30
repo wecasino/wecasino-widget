@@ -2,7 +2,13 @@ import { produce } from "immer";
 // import { shallow } from "zustand/shallow";
 import { createStore } from "zustand/vanilla";
 
-import { Game, GameInfoResult, GameRoundResult, Games } from "./types";
+import {
+  Game,
+  GameInfoResult,
+  GameRoundResult,
+  Games,
+  JackpotInfoResult,
+} from "./types";
 
 export interface IGameStore {
   games: Games;
@@ -15,6 +21,7 @@ export interface IGameStore {
   updateGameRounds: (gameRounds: GameRoundResult[]) => void;
   updatePlayerCnt: (playerCnt: { [key: string]: number }) => void;
   updateViewCnt: (viewCnt: { [key: string]: number }) => void;
+  updateJackpotInfo: (jpInfos: JackpotInfoResult[]) => void;
 }
 
 const getStoreDefaultState = () => ({
@@ -84,6 +91,23 @@ const createGameStore = () =>
       set((s) =>
         produce(s, (draft) => {
           draft.gameViewCnt = { ...draft.gameViewCnt, ...viewCnt };
+        })
+      );
+    },
+    updateJackpotInfo: (jpInfos: JackpotInfoResult[]) => {
+      set((s) =>
+        produce(s, (draft) => {
+          const updatedGames: Games = jpInfos.reduce((p, jp) => {
+            const gameCodes = jp?.gameCodes;
+            if (!gameCodes) return p;
+            const nextGames = gameCodes.reduce((pp, gc) => {
+              const game = pp[gc];
+              const nextGame = { ...game, jackpotInfo: jp };
+              return { ...pp, [gc]: nextGame };
+            }, p);
+            return { ...p, ...nextGames };
+          }, s.games);
+          draft.games = { ...draft.games, ...updatedGames };
         })
       );
     },

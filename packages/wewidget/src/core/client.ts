@@ -2,7 +2,7 @@
 
 import createConfigStore, { FooterConfig } from "./configStore";
 import createGameStore from "./gameStore";
-import { GameInfoResult, GameRoundResult } from "./types";
+import { GameInfoResult, GameRoundResult, JackpotInfoResult } from "./types";
 import { genWidgetToken } from "./token";
 
 export type WeClientConfig = {
@@ -118,6 +118,10 @@ class WeClient {
       if (data.gameViewCnt) {
         const viewCnt = data.gameViewCnt as { [key: string]: number };
         this._gameStore.getState().updateViewCnt(viewCnt);
+      }
+      if (data.jackpots) {
+        const jpInfo = data.jackpots as JackpotInfoResult[];
+        this._gameStore.getState().updateJackpotInfo(jpInfo);
       }
     } catch (e) {}
   }
