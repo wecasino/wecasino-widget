@@ -20,7 +20,7 @@ add dependencies
 
 "dependencies": {
     "@wecasino/weroadmap": "^0.8.2",
-    "@wecasino/wewidget": "^0.4.0",
+    "@wecasino/wewidget": "^0.4.3",
 }
 
 ```
