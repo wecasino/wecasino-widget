@@ -1,10 +1,10 @@
-import {
+import React, {
   Ref,
   useEffect,
-  useCallback,
   useLayoutEffect,
   useRef,
   useState,
+  JSX,
 } from "react";
 import SlotCounter, {
   SlotCounterRef,
@@ -208,12 +208,12 @@ const WeGameJackpot = ({
     alignItems: "center",
     borderRadius: " 0.25rem",
     background: "linear-gradient(rgb(42, 47, 66) 0%, rgb(21, 24, 34) 100%)",
-  };
+  } as React.CSSProperties;
   const textStyles = {
     paddingLeft: "0.25rem",
     paddingRight: "0.25rem",
     color: "white",
-  };
+  } as React.CSSProperties;
   const commonStyles = {
     flex: "1 1 0%",
     borderRadius: " 0.25rem",
@@ -226,7 +226,7 @@ const WeGameJackpot = ({
     fontWeight: 700,
     lineHeight: "1.375rem",
     color: "white",
-  };
+  } as React.CSSProperties;
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
@@ -265,4 +265,5 @@ const WeGameJackpot = ({
     </div>
   );
 };
+
 export default WeGameJackpot;

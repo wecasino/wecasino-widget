@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { type Lang } from "@wecasino/weroadmap";
 import useWeGameWidget, {
   BetCodeCG,
