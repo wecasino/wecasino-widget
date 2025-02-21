@@ -1,4 +1,8 @@
-import { useWeClient, WeGameWidget } from "@wecasino/wewidget/react";
+import {
+  useWeClient,
+  WeGameWidget,
+  WeGameJackpot,
+} from "@wecasino/wewidget/react";
 
 import React, { ReactNode, useState } from "react";
 
@@ -110,6 +114,12 @@ const App = () => {
         </select>
       </div>
       <button onClick={handleSubmit}>Connect </button>
+      <Item>
+        <Labels
+          points={["WeGameJackpot Text Demo", "Game Code: STUDIO-OLN-OLN001"]}
+        />
+        <WeGameJackpot gameCode="STUDIO-OLN-OLN001" />
+      </Item>
       <Item>
         <Labels points={["Game Code: STUDIO-BAA-1"]} />
         <WeGameWidget gameCode="STUDIO-BAA-1" />

@@ -37,7 +37,7 @@ const toPercentages = (ns: number[] = [], upto = 100): number[] => {
 
   return ret;
 };
-const RoundState = {
+export const RoundState = {
   SHUFFLE: "shuffle",
   NEW_SHOE: "newshoe",
   START: "start",

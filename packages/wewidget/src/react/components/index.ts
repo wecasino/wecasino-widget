@@ -1,3 +1,4 @@
 import WeGameWidget from "./WeGameWidget";
+import WeGameJackpot from "./WeGameJackpot";
 
-export { WeGameWidget };
+export { WeGameWidget, WeGameJackpot };

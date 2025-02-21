@@ -31,7 +31,9 @@
   },
   "dependencies": {
     "@wecasino/weroadmap": "workspace:*",
-    "js-sha3": "^0.9.3"
+    "js-sha3": "^0.9.3",
+    "numeral": "^2.0.6",
+    "react-slot-counter": "^3.2.0"
   },
   "peerDependencies": {
     "immer": "^10.1.1",
@@ -42,6 +44,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.14.10",
+    "@types/numeral": "^2.0.5",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.2",
     "react": "^19.0.0",
