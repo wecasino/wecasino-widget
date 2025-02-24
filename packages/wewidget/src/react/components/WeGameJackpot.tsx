@@ -229,7 +229,14 @@ const WeGameJackpot = ({
   } as React.CSSProperties;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "0.25rem",
+        width: "100%",
+      }}
+    >
       <div style={containerStyle}>
         <div style={textStyles}>GRAND</div>
         <div
