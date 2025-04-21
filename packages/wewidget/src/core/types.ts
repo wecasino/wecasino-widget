@@ -43,3 +43,32 @@ export type Game = {
 };
 
 export type Games = { [gameCode: string]: Game };
+
+export type PlayerActivityRankList = {
+  data: PlayerActivityRankListEntry[];
+};
+export type PlayerActivityRankListEntry = {
+  // 玩家UID
+  userUid: string;
+  // 玩家名稱
+  userCode: string;
+  // 排名
+  rank: number;
+  // 分數
+  rankScore: number;
+  // 獲得的獎品紀錄
+  winPrizes: RankListWinPrizesEntry[];
+  // 大頭貼
+  avatarUrl: string;
+  // 會員等級
+  memberLevel: string;
+};
+
+export type RankListWinPrizesEntry = {
+  // 獎項ID
+  prizeId: string;
+  // 獎項名稱
+  prizeName: string;
+  // 獲獎次數
+  winCount: number;
+};

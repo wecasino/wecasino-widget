@@ -14,16 +14,16 @@
         const token = document.getElementById("token");
         const envElem = document.getElementById("env");
         const env = envElem?.value || "snd";
-        const operCode = env === "snd" ? "weguest_ag3nP0D" : "weguest_agqJgF5";
-
         const languageElem = document.getElementById("language");
         const lang = languageElem?.value || "en";
         weClientInstance.setLanguage(lang);
         weClientInstance.connect({
           // ask we to provide
-          operCode: operCode,
+          operCode: env === "snd" ? "weguest_ag3nP0D" : "weguest_agqJgF5",
           // ask we to provide
-          appKey: "v1_81qFsUWYEfMgJaYtwjVDTbyFyXE5J4NpaTZDdDaq1HsL",
+          appKey: env === "snd"
+          ? "v1_FQdU97c4vihZxR2BKSEUuNmSJNRDZUwj1ss5tMfHfMig"
+          : "v1_81qFsUWYEfMgJaYtwjVDTbyFyXE5J4NpaTZDdDaq1HsL",
           sandbox: env === "snd",
           // for custom data url
           // dataUrl: "ws://localhost:16000/widgetws",

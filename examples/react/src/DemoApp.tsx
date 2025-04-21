@@ -68,11 +68,13 @@ const App = () => {
   };
   const handleSubmit = () => {
     closeClient();
-    const operCode = env === "snd" ? "weguest_ag3nP0D" : "weguest_agqJgF5";
     connectClient({
-      operCode,
+      operCode: env === "snd" ? "weguest_ag3nP0D" : "weguest_agqJgF5",
       language: lang,
-      appKey: "v1_81qFsUWYEfMgJaYtwjVDTbyFyXE5J4NpaTZDdDaq1HsL",
+      appKey:
+        env === "snd"
+          ? "v1_FQdU97c4vihZxR2BKSEUuNmSJNRDZUwj1ss5tMfHfMig"
+          : "v1_81qFsUWYEfMgJaYtwjVDTbyFyXE5J4NpaTZDdDaq1HsL",
       sandbox: env === "snd",
       reconnectDelay: 10000,
     });
