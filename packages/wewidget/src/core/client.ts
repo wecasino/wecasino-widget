@@ -2,7 +2,13 @@
 
 import createConfigStore, { FooterConfig } from "./configStore";
 import createGameStore from "./gameStore";
-import { GameInfoResult, GameRoundResult, JackpotInfoResult } from "./types";
+import {
+  ActivityUpdateEntry,
+  GameInfoResult,
+  GameRoundResult,
+  JackpotInfoResult,
+  JackpotTriggerResult,
+} from "./types";
 import { genWidgetToken } from "./token";
 
 export type WeClientConfig = {
@@ -122,6 +128,14 @@ class WeClient {
       if (data.jackpots) {
         const jpInfo = data.jackpots as JackpotInfoResult[];
         this._gameStore.getState().updateJackpotInfo(jpInfo);
+      }
+      if (data.jackpotTrigger) {
+        const jpTrigger = data.jackpotTrigger as JackpotTriggerResult;
+        this._gameStore.getState().updateJackpotTrigger(jpTrigger);
+      }
+      if (data.activityUpdate) {
+        const actUpdate = data.activityUpdate as ActivityUpdateEntry;
+        this._gameStore.getState().updateActivityUpdate(actUpdate);
       }
     } catch (e) {}
   }

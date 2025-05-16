@@ -8,6 +8,8 @@ import {
   GameRoundResult,
   Games,
   JackpotInfoResult,
+  ActivityUpdateEntry,
+  JackpotTriggerResult,
 } from "./types";
 
 export interface IGameStore {
@@ -15,6 +17,8 @@ export interface IGameStore {
   gameCodes: string[];
   gamePlayerCnt?: { [key: string]: number };
   gameViewCnt?: { [key: string]: number };
+  jpTrigger?: JackpotTriggerResult;
+  actUpdate?: ActivityUpdateEntry;
   updateGameCode: (gameCode: string) => void;
   updateGames: (games: Game[]) => void;
   updateGameInfos: (gameInfos: GameInfoResult[]) => void;
@@ -22,11 +26,15 @@ export interface IGameStore {
   updatePlayerCnt: (playerCnt: { [key: string]: number }) => void;
   updateViewCnt: (viewCnt: { [key: string]: number }) => void;
   updateJackpotInfo: (jpInfos: JackpotInfoResult[]) => void;
+  updateJackpotTrigger: (jpTrigger: JackpotTriggerResult) => void;
+  updateActivityUpdate: (actUpdate: ActivityUpdateEntry) => void;
 }
 
 const getStoreDefaultState = () => ({
   gameCodes: [],
   games: {},
+  jpTrigger: undefined,
+  actUpdate: undefined,
 });
 
 const createGameStore = () =>
@@ -108,6 +116,22 @@ const createGameStore = () =>
             return { ...p, ...nextGames };
           }, s.games);
           draft.games = { ...draft.games, ...updatedGames };
+        })
+      );
+    },
+    // JP中獎資訊
+    updateJackpotTrigger: (jpTrigger: JackpotTriggerResult) => {
+      set((s) =>
+        produce(s, (draft) => {
+          draft.jpTrigger = jpTrigger;
+        })
+      );
+    },
+    // 更新活動資訊
+    updateActivityUpdate: (a: ActivityUpdateEntry) => {
+      set((s) =>
+        produce(s, (draft) => {
+          draft.actUpdate = a;
         })
       );
     },

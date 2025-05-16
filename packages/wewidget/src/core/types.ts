@@ -73,6 +73,16 @@ export type RankListWinPrizesEntry = {
   winCount: number;
 };
 
+// JP中獎資訊
+export type JackpotTriggerResult = {
+  currency: string;
+  jpCode: string;
+  jpWinRank: number;
+  jpWinAmt: number;
+  gameCodes: string[];
+};
+
+// 活動更新資訊
 export type ActivityUpdateEntry = {
   serverTs: number;
   // 活動id
