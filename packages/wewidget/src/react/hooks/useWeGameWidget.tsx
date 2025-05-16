@@ -92,25 +92,36 @@ const handleImageUrl = (url: string) => {
   return `https://${url}`;
 };
 
-const useGame = (gameCode: string) =>
+export const useGame = (gameCode: string) =>
   useStore(weClientInstance.gameStore, (s) => {
     const game = s.games[gameCode];
     return game;
   });
 
-const usePlayerCnt = (gameCode: string) =>
+export const usePlayerCnt = (gameCode: string) =>
   useStore(weClientInstance.gameStore, (s) => {
     const playerCnt = s.gamePlayerCnt?.[gameCode] || 0;
     return playerCnt;
   });
 
-const useViewCnt = (gameCode: string) =>
+export const useViewCnt = (gameCode: string) =>
   useStore(weClientInstance.gameStore, (s) => {
     const viewCnt = s.gameViewCnt?.[gameCode] || 0;
     return viewCnt;
   });
 
-const useConfigStore = () => useStore(weClientInstance.configStore, (s) => s);
+export const useJackpotTrigger = () =>
+  useStore(weClientInstance.gameStore, (s) => {
+    return s.jpTrigger;
+  });
+
+export const useActivityUpdate = () =>
+  useStore(weClientInstance.gameStore, (s) => {
+    return s.actUpdate;
+  });
+
+export const useConfigStore = () =>
+  useStore(weClientInstance.configStore, (s) => s);
 
 export default ({ gameCode }: { gameCode: string }) => {
   const game = useGame(gameCode);
