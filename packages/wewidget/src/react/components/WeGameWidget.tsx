@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { type Lang } from "@wecasino/weroadmap";
-import useWeGameWidget, {
+import {
+  useWeGameWidget,
   BetCodeCG,
   betCodeCGTypes,
 } from "../hooks/useWeGameWidget";

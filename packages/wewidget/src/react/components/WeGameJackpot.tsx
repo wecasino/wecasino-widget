@@ -10,7 +10,7 @@ import SlotCounter, {
   SlotCounterRef,
   StartAnimationOptions,
 } from "react-slot-counter";
-import useWeGameWidget, { RoundState } from "../hooks/useWeGameWidget";
+import { useWeGameWidget, RoundState } from "../hooks/useWeGameWidget";
 import { useComposedRefs, interpolate, toCurrency } from "../utils";
 
 export const numberSlotClassName = "animated-counter-text-transition-elastic";
