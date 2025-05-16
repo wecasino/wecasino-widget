@@ -72,3 +72,16 @@ export type RankListWinPrizesEntry = {
   // 獲獎次數
   winCount: number;
 };
+
+export type ActivityUpdateEntry = {
+  serverTs: number;
+  // 活動id
+  activityId: string;
+  // 玩家
+  userName: string;
+  // 通知事件類型, should be 2
+  event: number;
+  // 獎項名稱
+  prizeName: string;
+  prizeCond: string;
+};
