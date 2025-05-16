@@ -4,7 +4,11 @@ import {
   WeGameJackpot,
 } from "@wecasino/wewidget/react";
 
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
+import {
+  useActivityUpdate,
+  useJackpotTrigger,
+} from "../../../packages/wewidget/src/react/hooks/useWeGameWidget";
 
 const Item = ({
   style,
@@ -60,6 +64,21 @@ const App = () => {
     const value = e?.target?.value;
     setEnv(value);
   };
+
+  const jpTrigger = useJackpotTrigger();
+  useEffect(() => {
+    if (jpTrigger) {
+      console.log("jackpot trigger", jpTrigger);
+    }
+  }, [jpTrigger]);
+
+  const actUpdate = useActivityUpdate();
+
+  useEffect(() => {
+    if (actUpdate) {
+      console.log("activity update", actUpdate);
+    }
+  }, [actUpdate]);
 
   const handleLangChange = (e: any) => {
     const value = e?.target?.value;
