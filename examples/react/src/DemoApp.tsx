@@ -2,13 +2,11 @@ import {
   useWeClient,
   WeGameWidget,
   WeGameJackpot,
+  useActivityUpdate,
+  useJackpotTrigger,
 } from "@wecasino/wewidget/react";
 
 import React, { ReactNode, useEffect, useState } from "react";
-import {
-  useActivityUpdate,
-  useJackpotTrigger,
-} from "../../../packages/wewidget/src/react/hooks/useWeGameWidget";
 
 const Item = ({
   style,

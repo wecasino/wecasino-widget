@@ -123,7 +123,7 @@ export const useActivityUpdate = () =>
 export const useConfigStore = () =>
   useStore(weClientInstance.configStore, (s) => s);
 
-export default ({ gameCode }: { gameCode: string }) => {
+export const useWeGameWidget = ({ gameCode }: { gameCode: string }) => {
   const game = useGame(gameCode);
   const playerCnt = usePlayerCnt(gameCode);
   const viewCnt = useViewCnt(gameCode);

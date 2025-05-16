@@ -10,7 +10,6 @@ import SlotCounter, {
   SlotCounterRef,
   StartAnimationOptions,
 } from "react-slot-counter";
-import numeral from "numeral";
 import useWeGameWidget, { RoundState } from "../hooks/useWeGameWidget";
 import { useComposedRefs, interpolate, toCurrency } from "../utils";
 

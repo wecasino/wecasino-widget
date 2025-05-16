@@ -24,7 +24,7 @@ export type WeClientConfig = {
 };
 
 const sndUrl = "wss://uat-weg-wgsapi.wehosts247.com/widgetws";
-const prdUrl = "wss://nc-game.worldonlinegame.com/widgetws";
+const prdUrl = "wss://nc-game.wes05.com/widgetws";
 
 class WeClient {
   private _cfg: WeClientConfig = { appKey: "", operCode: "" };
